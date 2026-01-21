@@ -1,0 +1,11 @@
+# Performance & Optimization Rules
+- Use Vite’s code-splitting and lazy loading.
+- Serve all media through a CDN.
+- Use responsive <img> tags or libraries (react-lazy-load-image).
+- Convert all images to WebP/AVIF; compress below 200 KB if possible.
+- Preload hero assets (fonts, hero bg).
+- Defer non-critical JS.
+- Minimize re-renders using React.memo, useCallback, useMemo.
+- Lazy-load 3D scenes after interaction or idle period.
+- Use Framer Motion’s reduced motion option for low-end devices.
+- Keep Lighthouse performance above 85 on mobile and desktop.

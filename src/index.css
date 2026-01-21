@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Kalrav';
+  src: url('./assets/fonts/Kalrav.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-kalrav-dark text-white overflow-x-hidden;
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif; /* Default sans, fallback to custom where needed */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-kalrav;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0f0c15;
+}
+::-webkit-scrollbar-thumb {
+  background: #6d28d9;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8b5cf6;
+}
