@@ -12,7 +12,7 @@ function App() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-kalrav-dark flex items-center justify-center text-white font-kalrav text-xl tracking-widest animate-pulse">
-        LOADING CHAOS...
+        LOADING ....
       </div>
     }>
       <Routes>
