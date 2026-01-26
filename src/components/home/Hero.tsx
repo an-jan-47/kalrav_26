@@ -6,7 +6,7 @@ export const Hero = () => {
     <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
       {/* Background Video Placeholder */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-kalrav-dark z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b" />
         {/* video link */} 
        
       </div>
@@ -20,7 +20,7 @@ export const Hero = () => {
       {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1, y: [0, 10, 0] }}
+        animate={{ opacity: 0.1, y: [0, 10, 0] }}
         transition={{ delay: 2, duration: 2, repeat: Infinity }}
         className="absolute bottom-10 z-20 text-white/50"
       >

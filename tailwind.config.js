@@ -14,6 +14,7 @@ export default {
       },
       fontFamily: {
         kalrav: ['Kalrav', 'sans-serif'],
+        'kalrav-body': ['Kalrav-body', 'sans-serif'],
       },
       backgroundImage: {
         'hero-gradient': 'linear-gradient(to bottom, transparent, #0f0c15)',

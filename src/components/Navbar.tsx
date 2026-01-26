@@ -1,18 +1,49 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
 import { cn } from '../utils/cn';
 
-const navItems = [
+const navItemsLeft = [
   { name: 'HOME', path: '/' },
   { name: 'ITINERARY', path: '/itinerary' },
-  { name: 'BOOK TICKETS', path: '/tickets' },
   { name: 'GALLERY', path: '/gallery' },
+];
+
+const navItemsRight = [
   { name: 'COMPETITION', path: '/competitions' },
   { name: 'SPONSORS', path: '/sponsors' },
   { name: 'TEAM', path: '/team' },
 ];
+
+const NavButton = ({ item, isActive }: { item: { name: string, path: string }, isActive: boolean }) => {
+    return (
+        <NavLink
+            to={item.path}
+            className="relative group py-2"
+        >
+            <motion.span
+                className={cn(
+                    "relative z-10 text-sm font-medium tracking-widest transition-colors font-kalrav uppercase",
+                    isActive ? "text-purple-400 drop-shadow-[0_0_8px_rgba(168,85,247,0.8)]" : "text-gray-300 group-hover:text-purple-300"
+                )}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+            >
+                {item.name}
+            </motion.span>
+            
+            {/* Active Indicator Dot */}
+            {/* {isActive && (
+                <motion.div
+                    layoutId="navbar-active"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.8)]"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                />
+            )} */}
+        </NavLink>
+    );
+};
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,63 +65,79 @@ export const Navbar = () => {
   return (
     <nav
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 transform',
-        scrolled ? 'bg-dark/90 backdrop-blur-md py-4 shadow-lg' : 'bg-transparent py-6'
+        'fixed top-0 left-0 right-0 z-[100] transition-all duration-300',
+        scrolled ? 'bg-black/80 backdrop-blur-md pt-2 pb-2' : 'bg-transparent pt-6 pb-4'
       )}
     >
-      <div className="container mx-auto px-6 flex items-center justify-between">
-        {/* Logo */}
-        <NavLink to="/" className="text-2xl font-kalrav text-white tracking-widest hover:text-kalrav-purple transition-colors">
-          KALRAV '26
-        </NavLink>
+      <div className="w-full flex flex-col items-center">
+        
+        {/* Desktop Flex Container */}
+        <div className="hidden md:flex w-full items-center justify-center relative px-10">
+            
+            {/* Left Line & Links */}
+            <div className="flex-1 flex justify-end items-center h-full border-b border-white/20 pb-4 pr-8 relative">
+                <div className="flex gap-12">
+                     {navItemsLeft.map((item) => (
+                        <NavButton key={item.name} item={item} isActive={location.pathname === item.path} />
+                    ))}
+                </div>
+            </div>
 
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center space-x-8">
-          {navItems.map((item) => (
-            <NavLink
-              key={item.name}
-              to={item.path}
-              className={({ isActive }: { isActive: boolean }) =>
-                cn(
-                  'text-sm font-medium tracking-widest transition-colors hover:text-kalrav-accent font-kalrav',
-                  isActive ? 'text-kalrav-purple drop-shadow-[0_0_8px_rgba(109,40,217,0.8)]' : 'text-gray-300'
-                )
-              }
-            >
-              {item.name}
-            </NavLink>
-          ))}
+            {/* Center Curve Logo Area */}
+            <div className="relative shrink-0 -mb-[42px] z-20 flex flex-col items-center justify-start h-[100px] w-[200px]">
+                {/* SVG Curve Background */}
+                
+                {/* Logo Text */}
+                <NavLink to="/" className="relative z-30 font-kalrav text-2xl text-white tracking-widest pt-2 hover:text-purple-400 transition-colors drop-shadow-md">
+                    KALRAV '26
+                </NavLink>
+                
+                 {/* Simplified Glow Effect */}
+                <div className="absolute top-4 w-20 h-20 bg-purple-500/20 blur-xl rounded-full pointer-events-none" />
+            </div>
+
+            {/* Right Line & Links */}
+            <div className="flex-1 flex justify-start items-center h-full border-b border-white/20 pb-4 pl-8 relative">
+              
+                 <div className="flex gap-12">
+                    {navItemsRight.map((item) => (
+                        <NavButton key={item.name} item={item} isActive={location.pathname === item.path} />
+                    ))}
+                 </div>
+            </div>
+
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-white hover:text-kalrav-purple transition-colors"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+        {/* Mobile Nav Header */}
+        <div className="md:hidden w-full px-6 flex justify-between items-center pb-4 border-b border-white/10">
+             <NavLink to="/" className="text-xl font-kalrav text-white tracking-widest">
+                KALRAV '26
+             </NavLink>
+             <button onClick={() => setIsOpen(!isOpen)} className="text-white">
+                  {isOpen ? <X /> : <Menu />}
+             </button>
+        </div>
       </div>
 
-      {/* Mobile Nav Overlay */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="absolute top-full left-0 right-0 bg-kalrav-dark/95 backdrop-blur-xl border-t border-white/10 md:hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10 overflow-hidden"
           >
-            <div className="flex flex-col items-center py-8 space-y-6">
-              {navItems.map((item) => (
+            <div className="flex flex-col items-center py-8 gap-6">
+              {[...navItemsLeft, ...navItemsRight].map((item) => (
                 <NavLink
                   key={item.name}
+                  onClick={() => setIsOpen(false)}
                   to={item.path}
-                  className={({ isActive }: { isActive: boolean }) =>
-                    cn(
-                      'text-lg font-kalrav tracking-widest transition-colors hover:text-kalrav-accent',
-                      isActive ? 'text-kalrav-purple drop-shadow-[0_0_8px_rgba(109,40,217,0.8)]' : 'text-gray-300'
-                    )
-                  }
+                  className={({ isActive }) => cn(
+                    "text-lg font-kalrav tracking-widest",
+                    isActive ? "text-purple-500" : "text-white/70"
+                  )}
                 >
                   {item.name}
                 </NavLink>

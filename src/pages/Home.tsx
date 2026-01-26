@@ -1,32 +1,61 @@
+import { useEffect, useState } from 'react';
 import { Layout } from '../components/Layout';
 import { Hero } from '../components/home/Hero';
 import { About } from '../components/home/About';
+import { HorizontalScrollCarousel } from '../components/home/HorizontalScrollCarousel';
+import { FAQ } from '../components/home/FAQ';
+import { PageBackground } from '../components/ui/PageBackground';
+import { EventsSection } from '../components/home/EventsSection';
+import HomeBg from '../assets/bg/home.webp';
+import { fetchHomeData } from '../services/home';
 
 const Home = () => {
-  return (
-    <Layout>
-      <Hero />
-      <About />
-      
-      {/* Placeholder for Events */}
-      <section className="py-20 px-6">
-        <h2 className="text-center text-4xl font-kalrav mb-12">PAST SOCIETY EVENTS</h2>
-        <div className="grid md:grid-cols-3 gap-8 container mx-auto">
-             {[1, 2, 3].map(i => (
-                 <div key={i} className="h-64 bg-gray-800 rounded-lg animate-pulse"></div>
-             ))}
-        </div>
-      </section>
+    const [homeData, setHomeData] = useState<{
+        reviews: { id: number; image_link: string }[];
+        legacies: { id: number; image_link: string }[];
+    }>({ reviews: [], legacies: [] });
+    const [, setLoading] = useState(true);
 
-      {/* Placeholder for Reviews */}
-      <section className="py-20 px-6">
-          <h2 className="text-center text-4xl font-kalrav mb-12">REVIEWS BY ATTENDEES</h2>
-           <div className="flex flex-wrap justify-center gap-4 container mx-auto">
-             {[1, 2, 3, 4, 5].map(i => (
-                 <div key={i} className="w-48 h-64 bg-gray-800/50 rounded-lg border border-white/5"></div>
-             ))}
-        </div>
-      </section>
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                const data = await fetchHomeData();
+                setHomeData(data);
+            } catch (error) {
+                console.error("Failed to fetch home data", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        loadData();
+    }, []);
+
+  return (
+    <Layout noPadding={true}>
+      <PageBackground src={HomeBg} parallax={true} />
+      <div className="relative z-10">
+        <Hero />
+        <About />
+        
+        <EventsSection 
+            events={homeData.legacies.map(l => ({
+                id: l.id,
+                image: l.image_link
+            }))} 
+        />
+
+        {homeData.reviews.length > 0 && (
+          <HorizontalScrollCarousel 
+            title="REVIEWS BY ATTENDEES"
+            items={homeData.reviews.map(r => ({
+                id: r.id,
+                image: r.image_link
+            }))}
+          />
+        )}
+        
+        <FAQ />
+      </div>
     </Layout>
   );
 };

@@ -1,12 +1,11 @@
 import { Layout } from '../components/Layout';
-import { motion } from 'framer-motion';
 
-const SponsorCard = ({ name, tier }: { name: string, tier: string }) => (
-  <div>
-    <h3>{name}</h3>
-    <p>{tier}</p>
-  </div>  
-);
+// const SponsorCard = ({ name, tier }: { name: string, tier: string }) => (
+//   <div>
+//     <h3>{name}</h3>
+//     <p>{tier}</p>
+//   </div>  
+// );
 
 const Sponsors = () => {
     // Dummy Data

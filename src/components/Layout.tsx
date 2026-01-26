@@ -4,13 +4,14 @@ import { Footer } from './Footer';
 
 interface LayoutProps {
   children: React.ReactNode;
+  noPadding?: boolean;
 }
 
-export const Layout = ({ children }: LayoutProps) => {
+export const Layout = ({ children, noPadding = false }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-kalrav-dark text-white flex flex-col">
       <Navbar />
-      <main className="flex-grow pt-20">
+      <main className={`flex-grow ${noPadding ? '' : 'pt-20'}`}>
         {children}
       </main>
       <Footer />

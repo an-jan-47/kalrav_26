@@ -10,6 +10,14 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Kalrav-body';
+  src: url('./assets/fonts/Marcellus-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   color-scheme: dark;
 }
@@ -19,10 +27,15 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  font-family: 'Inter', sans-serif; /* Default sans, fallback to custom where needed */
+  font-family: "Inter", sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   @apply font-kalrav;
 }
 
@@ -30,13 +43,16 @@ h1, h2, h3, h4, h5, h6 {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: #0f0c15;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #6d28d9;
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #8b5cf6;
 }
