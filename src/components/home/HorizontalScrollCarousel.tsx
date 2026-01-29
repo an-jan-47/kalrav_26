@@ -53,11 +53,7 @@ export const HorizontalScrollCarousel = ({
       const track = trackRef.current!;
       const section = sectionRef.current!;
       
-      const getScrollAmount = () => {
-        const trackWidth = track.scrollWidth;
-        const sectionWidth = section.offsetWidth;
-        return -(trackWidth - sectionWidth +window.innerWidth * 0.1); // Add a bit of padding/margin logic if needed, or stick to raw calculation
-      };
+
 
       gsap.to(track, {
         x: () => -(track.scrollWidth - window.innerWidth + 64), // Scroll until end with some padding
