@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, type HTMLMotionProps } from 'framer-motion';
 import { cn } from '../../utils/cn';
 
@@ -9,27 +9,51 @@ interface LazyImageProps extends HTMLMotionProps<"img"> {
 }
 
 export const LazyImage = ({ src, alt, className, ...props }: LazyImageProps) => {
+  const [inView, setInView] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setInView(true);
+        observer.disconnect();
+      }
+    }, {
+      rootMargin: '100px', // Load just before entering viewport
+      threshold: 0.1
+    });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <div className={cn("overflow-hidden bg-gray-900 relative", className)}>
-      <motion.img
-        src={src}
-        alt={alt}
-        initial={{ opacity: 0, scale: 1.1 }}
-        animate={{ 
-          opacity: loaded ? 1 : 0,
-          scale: loaded ? 1 : 1.1
-        }}
-        transition={{ duration: 0.5 }}
-        onLoad={() => setLoaded(true)}
-        className="w-full h-full object-cover"
-        loading="lazy"
-        {...props}
-      />
-      {!loaded && (
-        <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-8 h-8 border-2 border-kalrav-purple border-t-transparent rounded-full animate-spin" />
+    <div 
+      ref={containerRef} 
+      className={cn("overflow-hidden bg-gray-900 relative", className)}
+    >
+      {inView && (
+        <motion.img
+          src={src}
+          alt={alt}
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ 
+            opacity: loaded ? 1 : 0,
+            scale: loaded ? 1 : 1.1
+          }}
+          transition={{ duration: 0.5 }}
+          onLoad={() => setLoaded(true)}
+          className="w-full h-full object-cover"
+          {...props}
+        />
+      )}
+      {(!inView || !loaded) && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
+            <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
         </div>
       )}
     </div>

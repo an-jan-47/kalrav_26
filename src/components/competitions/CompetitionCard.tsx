@@ -28,7 +28,7 @@ export const CompetitionCard = ({ competition, index }: CompetitionCardProps) =>
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative w-full aspect-[3/4] bg-neutral-900/50 rounded-xl overflow-hidden cursor-pointer border border-white/5 hover:border-kalrav-purple/50 transition-all duration-300 shadow-lg hover:shadow-kalrav-purple/20"
+      className="group relative w-full aspect-[3/4] bg-neutral-900/50 rounded-xl overflow-hidden cursor-pointer border border-white/5 hover:border-kalrav-orange/50 transition-all duration-300 shadow-lg hover:shadow-kalrav-orange/20"
       onClick={handleClick}
       role="link"
       tabIndex={0}

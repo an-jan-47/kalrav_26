@@ -25,7 +25,7 @@ const NavButton = ({ item, isActive }: { item: { name: string, path: string }, i
             <motion.span
                 className={cn(
                     "relative z-10 text-sm font-medium tracking-widest transition-colors font-kalrav uppercase",
-                    isActive ? "text-purple-400 drop-shadow-[0_0_8px_rgba(168,85,247,0.8)]" : "text-gray-300 group-hover:text-purple-300"
+                    isActive ? "text-orange-300 drop-shadow-[0_0_8px_rgba(168,85,247,0.8)]" : "text-gray-300 group-hover:text-orange-300"
                 )}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
@@ -33,11 +33,10 @@ const NavButton = ({ item, isActive }: { item: { name: string, path: string }, i
                 {item.name}
             </motion.span>
             
-            {/* Active Indicator Dot */}
-            {/* {isActive && (
+           {/* {isActive && (
                 <motion.div
                     layoutId="navbar-active"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.8)]"
+                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-orange-400 shadow-[0_0_10px_rgba(168,85,247,0.8)]"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 />
             )} */}
@@ -88,12 +87,12 @@ export const Navbar = () => {
                 {/* SVG Curve Background */}
                 
                 {/* Logo Text */}
-                <NavLink to="/" className="relative z-30 font-kalrav text-2xl text-white tracking-widest pt-2 hover:text-purple-400 transition-colors drop-shadow-md">
-                    KALRAV '26
+                <NavLink to="/" className="relative z-30 font-kalrav text-2xl text-white tracking-widest pt-2 hover:text-orange-400 transition-colors drop-shadow-md">
+                    KALRAV '<span className="font-kalrav text-2xl">26</span>
                 </NavLink>
                 
                  {/* Simplified Glow Effect */}
-                <div className="absolute top-4 w-20 h-20 bg-purple-500/20 blur-xl rounded-full pointer-events-none" />
+                <div className="absolute top-4 w-20 h-20 bg-orange-400/20 blur-xl rounded-full pointer-events-none" />
             </div>
 
             {/* Right Line & Links */}
@@ -126,7 +125,7 @@ export const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10 overflow-hidden"
+            className="md:hidden bg-black/80 backdrop-blur-xl border-b border-white/10 overflow-hidden"
           >
             <div className="flex flex-col items-center py-8 gap-6">
               {[...navItemsLeft, ...navItemsRight].map((item) => (
@@ -136,7 +135,7 @@ export const Navbar = () => {
                   to={item.path}
                   className={({ isActive }) => cn(
                     "text-lg font-kalrav tracking-widest",
-                    isActive ? "text-purple-500" : "text-white/70"
+                    isActive ? "text-orange-400" : "text-white/70"
                   )}
                 >
                   {item.name}

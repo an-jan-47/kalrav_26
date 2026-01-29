@@ -5,7 +5,7 @@ import { PageBackground } from '../components/ui/PageBackground';
 import { CompetitionGrid } from '../components/competitions/CompetitionGrid';
 import { FilterBar } from '../components/competitions/FilterBar';
 import { fetchCompetitions, type Competition } from '../services/competitions';
-import HomeBg from '../assets/bg/gallery.webp';
+import CompetitionBg from '../assets/bg/competition.webp';
 
 const Competitions = () => {
   const [competitions, setCompetitions] = useState<Competition[]>([]);
@@ -51,7 +51,7 @@ const Competitions = () => {
 
   return (
     <Layout>
-      <PageBackground src={HomeBg} parallax={true} opacity={0.6}/>
+      <PageBackground src={CompetitionBg} parallax={true} opacity={0.6}/>
       
       <div className="container mx-auto px-6 py-20 min-h-screen">
         <motion.div

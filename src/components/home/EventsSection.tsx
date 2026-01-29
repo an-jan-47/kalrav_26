@@ -7,7 +7,6 @@ interface EventsSectionProps {
 }
 
 export const EventsSection = ({ events }: EventsSectionProps) => {
-    // If no events, handle gracefully (optional: show nothing or placeholder)
     if (!events || events.length === 0) return null;
 
   return (
@@ -15,7 +14,7 @@ export const EventsSection = ({ events }: EventsSectionProps) => {
         {/* Section Header */}
         <div className="container mx-auto px-6 mb-12 text-center">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-kalrav text-white tracking-widest mb-4">
-                PAST <span className="text-purple-400">LEGACIES</span>
+                PAST LEGACIES
             </h2>
         </div>
 

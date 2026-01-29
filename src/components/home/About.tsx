@@ -3,14 +3,14 @@ import ScrollReveal from '../ui/ScrollReveal';
 export const About = () => {
   return (
     <section className="py-20 bg-transparent relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-kalrav-purple/10 blur-[80px] rounded-full" />
+      <div className="absolute top-0 right-0 w-64 h-64 bg-kalrav-orange/10 blur-[80px] rounded-full" />
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-kalrav-accent/5 blur-[100px] rounded-full" />
 
       <div className="container mx-auto px-6 relative z-10 flex flex-col gap-20">
         
         {/* About Us */}
         <div className="flex flex-col items-start text-left max-w-4xl">
-           <h2 className="text-4xl md:text-5xl lg:text-6xl font-kalrav text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-400 mb-8 drop-shadow-lg">
+           <h2 className="text-4xl md:text-5xl lg:text-6xl font-kalrav text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-400 mb-8 drop-shadow-lg uppercase tracking-wider">
             About Us
           </h2>
 
@@ -48,7 +48,7 @@ export const About = () => {
               baseRotation={0} 
               baseOpacity={0.1}
               containerClassName="mt-4"
-              textClassName="text-kalrav-accent text-xl md:text-2xl font-kalrav-body font-normal tracking-wider leading-relaxed text-left"
+              textClassName="text-orange-400 text-xl md:text-2xl font-kalrav-body font-normal tracking-wider leading-relaxed text-left "
               enableBlur={true}
               blurStrength={2}
           >
@@ -58,7 +58,7 @@ export const About = () => {
 
         {/* About Theme */}
         <div className="flex flex-col items-end text-right max-w-4xl ml-auto">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-kalrav text-transparent bg-clip-text bg-gradient-to-r from-gray-400 via-gray-200 to-white mb-8 drop-shadow-lg">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-kalrav text-transparent bg-clip-text bg-gradient-to-r from-gray-400 via-gray-200 to-white mb-8 drop-shadow-lg uppercase tracking-wider">
             About Theme
           </h2>
 
@@ -86,7 +86,7 @@ export const About = () => {
               baseRotation={0} 
               baseOpacity={0.1}
               containerClassName="mt-4"
-              textClassName="text-kalrav-accent text-xl md:text-2xl font-kalrav-body font-normal tracking-wider leading-relaxed text-right"
+              textClassName="text-orange-400 text-xl md:text-2xl font-kalrav-body font-normal tracking-wider leading-relaxed text-right"
               enableBlur={true}
               blurStrength={2}
           >

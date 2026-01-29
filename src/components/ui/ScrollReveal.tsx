@@ -50,61 +50,65 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
 
     // Use window if no container ref provided
     const scroller = scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
-
-    // Initial Set
-    const wordElements = el.querySelectorAll<HTMLElement>('.word');
     
-    // Clear any previous GSAP styles
-    gsap.set(el, { clearProps: 'all' });
-    gsap.set(wordElements, { clearProps: 'all' });
+    // Check for mobile/reduced motion preference
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+    const effectiveBlur = isMobile ? (blurStrength / 2) : blurStrength; // Reduce blur load on mobile
+    const useBlur = enableBlur && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // Rotate Animation on Container
-    // This creates a slight tilt that straightens out as you scroll
-    const rotateTimeline = gsap.fromTo(
-      el,
-      { transformOrigin: '0% 50%', rotate: baseRotation },
-      {
-        ease: 'none',
-        rotate: 0,
-        scrollTrigger: {
-          trigger: el,
-          scroller,
-          start: 'top bottom', // Start when top of element hits bottom of viewport
-          end: rotationEnd,
-          scrub: true,
-        }
-      }
-    );
+    const ctx = gsap.context(() => {
+        // Initial Clear
+        gsap.set(el, { clearProps: 'all' });
+        const wordElements = el.querySelectorAll('.word');
+        gsap.set(wordElements, { clearProps: 'all' });
 
-    // Opacity & Blur Animation on Words
-    const wordTimeline = gsap.fromTo(
-      wordElements,
-      { 
-        opacity: baseOpacity, 
-        willChange: 'opacity, filter, transform',
-        filter: enableBlur ? `blur(${blurStrength}px)` : 'none'
-      },
-      {
-        ease: 'none',
-        opacity: 1,
-        filter: 'blur(0px)',
-        stagger: 0.05,
-        scrollTrigger: {
-          trigger: el,
-          scroller,
-          start: 'top bottom-=10%', // Start slightly later
-          end: wordAnimationEnd,
-          scrub: true,
-        }
-      }
-    );
+        // Single timeline for synchronized, efficient animation
+        // We use one ScrollTrigger to drive the main timeline
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: el,
+                scroller,
+                start: 'top 85%', // Trigger slightly earlier for smoother entry
+                end: wordAnimationEnd, // Use the prop
+                scrub: 1, // Smooth scrolling (1s catch-up) to eliminate jitter
+            }
+        });
 
-    return () => {
-        rotateTimeline.scrollTrigger?.kill();
-        rotateTimeline.kill();
-        wordTimeline.scrollTrigger?.kill();
-        wordTimeline.kill();
-    };
+        // 1. Container Rotation (Subtle 3D effect)
+        // We can animate this in parallel with words
+        tl.fromTo(
+            el,
+            { transformOrigin: '0% 50%', rotate: baseRotation },
+            { 
+                rotate: 0, 
+                ease: 'power2.out',
+                duration: 1 // Relative duration in scrub timeline
+            },
+            0 // Start at time 0
+        );
+
+        // 2. Word Reveal (Staggered)
+        tl.fromTo(
+            wordElements,
+            { 
+                opacity: baseOpacity, 
+                filter: useBlur ? `blur(${effectiveBlur}px)` : 'none',
+                y: 10, // Slight Y translation for better feel
+                willChange: 'opacity, transform, filter' 
+            },
+            {
+                opacity: 1,
+                filter: 'blur(0px)',
+                y: 0,
+                stagger: 0.1, // Stagger relative to scrub progress
+                ease: 'power2.out',
+                duration: 1
+            },
+            0 // Start concurrent with rotation
+        );
+    });
+
+    return () => ctx.revert();
   }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength]);
 
   return (

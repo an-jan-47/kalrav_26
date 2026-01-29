@@ -42,11 +42,11 @@ export const FilterBar = ({ categories, activeCategory, onSelect }: FilterBarPro
         className={cn(
           "flex items-center gap-3 px-6 py-3 rounded-full transition-all duration-300 border backdrop-blur-md group",
           isOpen 
-            ? "bg-kalrav-purple/20 border-kalrav-purple text-white shadow-[0_0_20px_rgba(139,92,246,0.3)]" 
+            ? "bg-kalrav-orange/20 border-kalrav-orange text-white shadow-[0_0_20px_rgba(139,92,246,0.3)]" 
             : "bg-white/5 border-white/10 text-white/80 hover:bg-white/10 hover:border-white/30"
         )}
       >
-        <Filter size={18} className={cn("transition-colors", isOpen ? "text-kalrav-purple" : "text-white/60 group-hover:text-white")} />
+        <Filter size={18} className={cn("transition-colors", isOpen ? "text-kalrav-orange" : "text-white/60 group-hover:text-white")} />
         <span className="font-kalrav tracking-wider text-sm uppercase">
           {activeCategory === 'All' ? 'Filter By' : activeCategory}
         </span>
@@ -74,7 +74,7 @@ export const FilterBar = ({ categories, activeCategory, onSelect }: FilterBarPro
                   className={cn(
                     "w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm transition-all duration-200 group mb-1 last:mb-0",
                     activeCategory === category
-                      ? "bg-kalrav-purple/20 text-white font-medium"
+                      ? "bg-kalrav-orange/20 text-white font-medium"
                       : "text-white/60 hover:bg-white/5 hover:text-white"
                   )}
                 >
@@ -85,7 +85,7 @@ export const FilterBar = ({ categories, activeCategory, onSelect }: FilterBarPro
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                     >
-                        <Check size={14} className="text-kalrav-purple" />
+                        <Check size={14} className="text-kalrav-orange" />
                     </motion.div>
                   )}
                 </button>

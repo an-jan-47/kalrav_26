@@ -5,16 +5,17 @@ import { Footer } from './Footer';
 interface LayoutProps {
   children: React.ReactNode;
   noPadding?: boolean;
+  showBowArrow?: boolean;
 }
 
-export const Layout = ({ children, noPadding = false }: LayoutProps) => {
+export const Layout = ({ children, noPadding = false, showBowArrow = false }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-kalrav-dark text-white flex flex-col">
       <Navbar />
       <main className={`flex-grow ${noPadding ? '' : 'pt-20'}`}>
         {children}
       </main>
-      <Footer />
+      <Footer showBowArrow={showBowArrow} />
     </div>
   );
 };

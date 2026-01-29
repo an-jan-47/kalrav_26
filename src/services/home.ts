@@ -10,11 +10,7 @@ export interface Review {
   id: number;
   image_link: string;
   created_at: string;
-  // If we had text/name columns, we'd add them here. 
-  // For now, based on instructions "fetch images... and use them as background", 
-  // we might mock the text or if the table HAS text, use it.
-  // The user prompt said: "fetch images from the reviews table... and use them as the background".
-  // It implies the reviews table might JUST be images, or images are the focus.
+  
 }
 
 export const fetchHomeData = async () => {

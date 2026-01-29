@@ -31,8 +31,8 @@ const Home = () => {
     }, []);
 
   return (
-    <Layout noPadding={true}>
-      <PageBackground src={HomeBg} parallax={true} />
+    <Layout noPadding={true} showBowArrow={true}>
+      <PageBackground src={HomeBg} parallax={true}/>
       <div className="relative z-10">
         <Hero />
         <About />

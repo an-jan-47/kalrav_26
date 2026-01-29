@@ -1,6 +1,10 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useLayoutEffect, useMemo } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { LazyImage } from "../ui/LazyImage";
+import { motion } from "framer-motion";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export interface ReviewItem {
   id: number;
@@ -16,111 +20,119 @@ export const HorizontalScrollCarousel = ({
   items,
   title,
 }: HorizontalScrollCarouselProps) => {
-  const targetRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ["start start", "end end"],
-  });
-
-
-
-  // Hardcoded Review Texts (Restored)
-  const REVIEW_TEXTS = [
+  // Hardcoded Review Texts (Exactly 5 as requested)
+  const REVIEW_TEXTS = useMemo(() => [
     { text: "The concerts were mind-blowing.", subtext: "Music Club Lead" },
-    { text: "Loved the gaming events!", subtext: "Esports Participant" },
     { text: "So well organized. Can't wait for '26.", subtext: "Sponsor Rep" },
+    { text: "Can't Hold my excitement for '26!", subtext: "Alumni" },
     { text: "The vibe, the people, everything was perfect.", subtext: "General Attendee" },
-    { text: "Chaos of Shadow theme sounds epic!", subtext: "Alumni" },
-  ];
+    { text: "Most memorable college fest ever.", subtext: "Cultural Sec" },
+  ], []);
 
-  // Create a combined list of { image, text, subtext }
-  // We use Omit to override the 'id' type from number to string | number if needed, 
-  // or just Keep it number but since we are appending index, we need to be careful.
-  // Ideally we just make a new type that doesn't strictly extend if we change ID type.
-  type CombinedItem = Omit<ReviewItem, 'id'> & {
-      id: string | number;
-      text: string;
-      subtext: string;
-  };
-  
-  const combinedItems: CombinedItem[] = [];
-  // Repeat at least enough times to have ~10-15 items for good scroll
-  const repeatCount = items.length > 5 ? 2 : 4; 
-  
-  if (items.length > 0) {
-      for (let i = 0; i < repeatCount; i++) {
-        items.forEach((item, index) => {
-            const textData = REVIEW_TEXTS[(index + i * items.length) % REVIEW_TEXTS.length];
-            combinedItems.push({
-                id: `${item.id}-${i}`, // Now valid because id is string | number
-                image: item.image,
-                ...textData
-            });
-        });
-      }
-  }
+  // Combine items with text, ensuring exactly 5 cards
+  const cards = useMemo(() => {
+    if (items.length === 0) return [];
+    return REVIEW_TEXTS.map((review, index) => {
+      // Loop through available images if fewer than 5
+      const item = items[index % items.length];
+      return {
+        id: `review-${index}`,
+        image: item.image,
+        ...review
+      };
+    });
+  }, [items, REVIEW_TEXTS]);
 
-  // Adjust scroll range. 0% to -50% means we scroll 50% of the container width.
-  // If the container is 4x the original items, 50% scroll means we see 2x items.
-  // This is a seamless loop effect.
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
+  useLayoutEffect(() => {
+    if (cards.length === 0 || !sectionRef.current || !trackRef.current) return;
 
-  if (!items.length) return <div ref={targetRef} className="hidden" />;
+    const ctx = gsap.context(() => {
+      const track = trackRef.current!;
+      const section = sectionRef.current!;
+      
+      const getScrollAmount = () => {
+        const trackWidth = track.scrollWidth;
+        const sectionWidth = section.offsetWidth;
+        return -(trackWidth - sectionWidth +window.innerWidth * 0.1); // Add a bit of padding/margin logic if needed, or stick to raw calculation
+      };
+
+      gsap.to(track, {
+        x: () => -(track.scrollWidth - window.innerWidth + 64), // Scroll until end with some padding
+        ease: "none",
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "+=2000", // Adjust scroll length for feel
+          scrub: 1, // "Butter-like" smoothing
+          pin: true,
+          invalidateOnRefresh: true,
+          // snap: 1 / (cards.length - 1), // Optional: snap to cards
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [cards]);
+
+  if (cards.length === 0) return null;
 
   return (
-    <section ref={targetRef} className="relative h-[300vh] w-full bg-black/20">
-      <div className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden">
-
-        {title && (
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ amount: 0.6 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="relative z-20 mb-12 px-4"
-          >
-            <h2 className="text-center text-3xl md:text-5xl font-kalrav text-white tracking-wider drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]">
+    <section ref={sectionRef} className="relative w-full bg-black/20 overflow-hidden">
+      {/* Title (Static or animated separately) */}
+      <div className="absolute top-10 left-0 w-full z-20 text-center pointer-events-none">
+          {title && (
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-3xl md:text-5xl font-kalrav text-white tracking-wider drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]"
+            >
               {title}
-            </h2>
-          </motion.div>
-        )}
+            </motion.h2>
+          )}
+      </div>
 
-        <motion.div
-          style={{ x }}
-          className="flex gap-8 pl-[10vw] will-change-transform"
+      {/* Sticky Container */}
+      <div className="h-screen w-full flex items-center overflow-hidden">
+        {/* Track */}
+        <div 
+          ref={trackRef} 
+          className="flex gap-4 md:gap-8 px-4 md:px-[5vw] w-max items-center"
         >
-          {combinedItems.map((item, index) => (
+          {cards.map((card) => (
             <div
-              key={`${item.id}-${index}`}
-              className="group relative h-[400px] w-[300px] md:h-[500px] md:w-[400px] flex-shrink-0 overflow-hidden rounded-2xl border border-white/5 bg-gray-900 shadow-2xl transition-all duration-500 hover:scale-105 hover:border-purple-500/30"
+              key={card.id}
+              className="group relative h-[50vh] w-[80vw] md:h-[60vh] md:w-[30vw] flex-shrink-0 overflow-hidden rounded-2xl border border-white/5 bg-gray-900 shadow-2xl transition-all duration-500 hover:border-orange-500/30"
             >
               <LazyImage 
-                src={item.image} 
+                src={card.image} 
                 alt="Review"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
               
-              {/* Restored Overlay with Text */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/90 opacity-80 transition-opacity duration-300" />
+              {/* Overlay with Text */}
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/40 to-black/90 opacity-80" />
               
               <div className="absolute inset-0 z-10 flex h-full flex-col items-center justify-center gap-5 p-6 text-center">
-                <p className="text-lg md:text-xl italic text-white/90 line-clamp-3">
-                  “{item.text}”
+                <p className="text-lg md:text-2xl italic text-white/90 line-clamp-4 font-normal tracking-wide">
+                  “{card.text}”
                 </p>
 
-                {item.subtext && (
+                {card.subtext && (
                   <>
                     <div className="h-0.5 w-14 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
                     <span className="text-xs font-bold uppercase tracking-widest text-white/60">
-                      {item.subtext}
+                      {card.subtext}
                     </span>
                   </>
                 )}
               </div>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
