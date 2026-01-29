@@ -69,33 +69,11 @@ export const About = () => {
               containerClassName="mb-8"
               textClassName="text-gray-200 text-lg md:text-xl font-kalrav-body font-normal leading-relaxed tracking-wide text-right"
           >
-            Theme Explanation
-          </ScrollReveal>
-
-           <ScrollReveal 
-              baseRotation={1} 
-              baseOpacity={0.1}
-              blurStrength={2}
-              containerClassName="mb-8"
-              textClassName="text-gray-200 text-lg md:text-xl font-kalrav-body font-normal leading-relaxed tracking-wide text-right"
-          >
-            ...
-          </ScrollReveal>
-          
-           <ScrollReveal 
-              baseRotation={0} 
-              baseOpacity={0.1}
-              containerClassName="mt-4"
-              textClassName="text-orange-400 text-xl md:text-2xl font-kalrav-body font-normal tracking-wider leading-relaxed text-right"
-              enableBlur={true}
-              blurStrength={2}
-          >
-             Embrace the fest.
-          </ScrollReveal>
+            तमःक्षयः (Tamaḥkṣayaḥ)  End of Darkness represents the breaking point where silence ends and expression begins. It symbolizes the destruction of ignorance, fear, and limitation, making way for creativity, courage, and identity.
+            Kalrav ’26 embraces this moment of transformation where chaos is confronted, voices rise from the shadows, and culture emerges stronger, louder, and unapologetically alive.
+          </ScrollReveal>      
         </div>
-
-      </div>
-         
+      </div>      
     </section>
   );
 };

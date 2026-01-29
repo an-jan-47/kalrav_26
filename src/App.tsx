@@ -11,11 +11,13 @@ const Sponsors = lazy(() => import("./pages/Sponsors"));
 const Itinerary = lazy(() => import("./pages/Itinerary"));
 
 import ScrollToTop from "./components/ui/ScrollToTop";
+import SEO from "./components/SEO";
 
 function App() {
   return (
     <>
       <ScrollToTop />
+      <SEO />
       <Analytics />
       <SpeedInsights />
       <Suspense

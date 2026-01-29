@@ -22,7 +22,7 @@ const questions = [
   },
   {
     question: "What is the theme Theme about?",
-    answer: "Explaination of theme"
+    answer: "तमःक्षयः (Tamaḥkṣayaḥ) End of Darkness represents the breaking point where silence ends and expression begins. It symbolizes the destruction of ignorance, fear, and limitation, making way for creativity, courage, and identity. Kalrav ’26 embraces this moment of transformation where chaos is confronted, voices rise from the shadows, and culture emerges stronger, louder, and unapologetically alive."
   },
   {
     question:"Rules And Regulations",

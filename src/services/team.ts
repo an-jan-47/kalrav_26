@@ -22,8 +22,8 @@ export const fetchTeamData = async () => {
   const members = (data || []) as TeamMember[];
   
   return {
-    council: members.filter(m => m.category === 'council'),
-    team: members.filter(m => m.category === 'team')
+    council: members.filter(m => m.category?.toLowerCase().trim() === 'council'),
+    team: members.filter(m => m.category?.toLowerCase().trim() === 'team')
   };
 };
 
