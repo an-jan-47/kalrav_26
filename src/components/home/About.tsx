@@ -15,15 +15,17 @@ export const About = () => {
           </h2>
 
           <ScrollReveal 
-              baseRotation={1} 
-              baseOpacity={0.15}
+              baseRotation={1.2} 
+              baseOpacity={0.1}
               blurStrength={2}
               containerClassName="mb-8"
-              textClassName="text-gray-100 text-lg md:text-xl font-kalrav-body font-normal leading-loose tracking-wide text-left drop-shadow-sm"
+              textClassName="text-gray-100 text-lg md:text-xl font-kalrav-body font-normal leading-loose tracking-wide text-left drop-shadow-sm whitespace-pre-line"
           >
-            The revival of Kalrav, the annual extravaganza organized by Deen Dayal Upadhyaya, brings with it an electrifying anticipation! With over 20,000 students from 100+ colleges nationwide eagerly awaiting its return, Kalrav holds immense significance.
-            This year's Kalrav pledges an unforgettable experience, showcasing a myriad of delights from tantalizing cuisine to vibrant music and playful activities. The lineup promises an even grander musical spectacle, building upon the legacy of past performances featuring icons like Honey Singh, Jubin Nautiyal, and Guru Randhawa.
-            With renowned artists, musicians, and performers gracing the stage, the campus is set to transform into a captivating mosaic of creativity and camaraderie.
+            {`The revival of Kalrav, the annual extravaganza organized by Deen Dayal Upadhyaya, brings with it an electrifying anticipation! With over 20,000 students from 100+ colleges nationwide eagerly awaiting its return, Kalrav holds immense significance.
+
+This year's Kalrav pledges an unforgettable experience, showcasing a myriad of delights from tantalizing cuisine to vibrant music and playful activities. The lineup promises an even grander musical spectacle, building upon the legacy of past performances featuring icons like Honey Singh, Jubin Nautiyal, and Guru Randhawa.
+
+With renowned artists, musicians, and performers gracing the stage, the campus is set to transform into a captivating mosaic of creativity and camaraderie.`}
             
           </ScrollReveal>
 
@@ -46,14 +48,15 @@ export const About = () => {
           </h2>
 
            <ScrollReveal 
-              baseRotation={-1} 
+              baseRotation={-1.2} 
               baseOpacity={0.1}
               blurStrength={2}
               containerClassName="mb-8"
-              textClassName="text-gray-100 text-lg md:text-xl font-kalrav-body font-normal leading-loose tracking-wide text-right drop-shadow-sm"
+              textClassName="text-gray-100 text-lg md:text-xl font-kalrav-body font-normal leading-loose tracking-wide text-right drop-shadow-sm whitespace-pre-line"
           >
-            तमःक्षयः (Tamaḥkṣayaḥ)  End of Darkness represents the breaking point where silence ends and expression begins. It symbolizes the destruction of ignorance, fear, and limitation, making way for creativity, courage, and identity.
-            Kalrav ’26 embraces this moment of transformation where chaos is confronted, voices rise from the shadows, and culture emerges stronger, louder, and unapologetically alive.
+            {`तमःक्षयः (Tamaḥkṣayaḥ)  End of Darkness represents the breaking point where silence ends and expression begins. It symbolizes the destruction of ignorance, fear, and limitation, making way for creativity, courage, and identity.
+
+Kalrav ’26 embraces this moment of transformation where chaos is confronted, voices rise from the shadows, and culture emerges stronger, louder, and unapologetically alive.`}
           </ScrollReveal>      
         </div>
       </div>      

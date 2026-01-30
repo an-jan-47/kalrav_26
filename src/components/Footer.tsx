@@ -53,7 +53,7 @@ export const Footer = ({ showBowArrow = false }: FooterProps) => {
         transition={{ delay: 0.2 }}
         className="flex flex-col items-center gap-2 mt-4"
       >
-        <p className="text-white/25 text-xs tracking-wider font-kalrav-body">
+        <p className="text-white/30 text-xs tracking-wider font-kalrav-body">
           Developed by Anjan
         </p>
         <div className="flex gap-4">

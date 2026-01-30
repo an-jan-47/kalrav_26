@@ -45,13 +45,14 @@ const TeamMemberCard = ({ member }: TeamMemberCardProps) => {
         className="w-full h-full relative preserve-3d transition-all duration-300"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
+        whileHover={{ y: -10, scale: 1.02 }}
         viewport={{ once: true }}
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
         style={{ transformStyle: 'preserve-3d' }}
       >
         {/* Front Face */}
-        <div className="aspect-[3/4] w-full relative overflow-hidden rounded-xl backface-hidden shadow-lg border border-white/10 bg-gray-900">
+        <div className="aspect-[3/4] w-full relative overflow-hidden rounded-xl backface-hidden bg-transparent">
            {/* Image */}
            <div className="w-full h-full transform transition-transform duration-500 group-hover:scale-103">
               <LazyImage 

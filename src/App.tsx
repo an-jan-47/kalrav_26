@@ -13,6 +13,7 @@ const Merch = lazy(() => import("./pages/Merch"));
 
 import ScrollToTop from "./components/ui/ScrollToTop";
 import SEO from "./components/SEO";
+import StructuredData from "./components/StructuredData";
 import Loader from "./components/ui/Loader";
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
     <>
       <ScrollToTop />
       <SEO />
+      <StructuredData />
       <Analytics />
       <SpeedInsights />
       
