@@ -16,39 +16,22 @@ export const About = () => {
 
           <ScrollReveal 
               baseRotation={1} 
-              baseOpacity={0.1}
+              baseOpacity={0.15}
               blurStrength={2}
               containerClassName="mb-8"
-              textClassName="text-gray-200 text-lg md:text-xl font-kalrav-body font-normal leading-relaxed tracking-wide text-left"
+              textClassName="text-gray-100 text-lg md:text-xl font-kalrav-body font-normal leading-loose tracking-wide text-left drop-shadow-sm"
           >
             The revival of Kalrav, the annual extravaganza organized by Deen Dayal Upadhyaya, brings with it an electrifying anticipation! With over 20,000 students from 100+ colleges nationwide eagerly awaiting its return, Kalrav holds immense significance.
-          </ScrollReveal>
-
-          <ScrollReveal 
-              baseRotation={-1} 
-              baseOpacity={0.1}
-              blurStrength={2}
-              containerClassName="mb-8"
-              textClassName="text-gray-200 text-lg md:text-xl font-kalrav-body font-normal leading-relaxed tracking-wide text-left"
-          >
-            This year's Kalrav pledges an unforgettable experience, showcasing a myriad of delights – from tantalizing cuisine to vibrant music and playful activities. The lineup promises an even grander musical spectacle, building upon the legacy of past performances featuring icons like Honey Singh, Jubin Nautiyal, and Guru Randhawa.
-          </ScrollReveal>
-
-          <ScrollReveal 
-              baseRotation={1} 
-              baseOpacity={0.1}
-              blurStrength={2}
-              containerClassName="mb-8"
-              textClassName="text-gray-200 text-lg md:text-xl font-kalrav-body font-normal leading-relaxed tracking-wide text-left"
-          >
+            This year's Kalrav pledges an unforgettable experience, showcasing a myriad of delights from tantalizing cuisine to vibrant music and playful activities. The lineup promises an even grander musical spectacle, building upon the legacy of past performances featuring icons like Honey Singh, Jubin Nautiyal, and Guru Randhawa.
             With renowned artists, musicians, and performers gracing the stage, the campus is set to transform into a captivating mosaic of creativity and camaraderie.
+            
           </ScrollReveal>
 
            <ScrollReveal 
               baseRotation={0} 
               baseOpacity={0.1}
               containerClassName="mt-4"
-              textClassName="text-orange-400 text-xl md:text-2xl font-kalrav-body font-normal tracking-wider leading-relaxed text-left "
+              textClassName="text-orange-400 text-xl md:text-2xl font-kalrav-body font-medium tracking-wider leading-relaxed text-left drop-shadow-[0_0_15px_rgba(251,146,60,0.4)]"
               enableBlur={true}
               blurStrength={2}
           >
@@ -67,7 +50,7 @@ export const About = () => {
               baseOpacity={0.1}
               blurStrength={2}
               containerClassName="mb-8"
-              textClassName="text-gray-200 text-lg md:text-xl font-kalrav-body font-normal leading-relaxed tracking-wide text-right"
+              textClassName="text-gray-100 text-lg md:text-xl font-kalrav-body font-normal leading-loose tracking-wide text-right drop-shadow-sm"
           >
             तमःक्षयः (Tamaḥkṣayaḥ)  End of Darkness represents the breaking point where silence ends and expression begins. It symbolizes the destruction of ignorance, fear, and limitation, making way for creativity, courage, and identity.
             Kalrav ’26 embraces this moment of transformation where chaos is confronted, voices rise from the shadows, and culture emerges stronger, louder, and unapologetically alive.

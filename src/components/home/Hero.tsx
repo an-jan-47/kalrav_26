@@ -45,15 +45,8 @@ export const Hero = () => {
       {/* Background container (preserved from previous code) */}
       <div className="absolute inset-0 z-0 " />
 
-      {/* Hero Text */}
-      <div className="relative z-20 text-center px-4">
-        <h1 
-          ref={textRef}
-          className="text-6xl md:text-8xl lg:text-9xl font-kalrav text-white tracking-widest drop-shadow-[0_0_30px_rgba(255,165,0,0.3)] will-change-transform"
-        >
-          
-        </h1>
-      </div>
+      {/* SEO ONLY: Hidden H1 */}
+      <h1 className="sr-only">KALRAV '26</h1>
 
       {/* Scroll Indicator */}
       <motion.div

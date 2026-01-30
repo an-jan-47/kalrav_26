@@ -75,11 +75,11 @@ const BowArrowAnimation = () => {
                 ease: "none",
             });
 
-            // 2. Fade out the Glow
+            // 2. Fade out the Glow (Partial)
             if (glowRef.current) {
                 tl.to(glowRef.current, {
-                    opacity: 0,
-                    scale: 0.5, // Check if this looks good, adds "dwindling energy" feel
+                    opacity: 0.6, // Keep some glow visible
+                    scale: 0.8, // Reduced scale shrinkage
                     ease: "none" 
                 }, "<"); // "<" syncs start time
             }
@@ -116,10 +116,10 @@ const BowArrowAnimation = () => {
                     willChange: 'transform'
                 }} 
             >
-                {/* Glow Effect - Absolute at top tip */}
+                {/* Glow Effect - Absolute at top tip - DECREASED INTENSITY (50%) */}
                  <div 
                     ref={glowRef}
-                    className="absolute -top-6 w-12 h-12 bg-orange-400/60 rounded-full blur-xl pointer-events-none md:w-16 md:h-16 md:-top-8"
+                    className="absolute -top-6 w-12 h-12 bg-orange-500/50 rounded-full blur-[20px] pointer-events-none md:w-16 md:h-16 md:-top-8 drop-shadow-[0_0_20px_rgba(255,140,0,0.5)]"
                     style={{
                         willChange: 'opacity, transform',
                         zIndex: -1 // Behind arrow
@@ -130,7 +130,7 @@ const BowArrowAnimation = () => {
                     ref={arrowImgRef}
                     src={ArrowImg} 
                     alt="Golden Arrow" 
-                    className="w-32 md:w-40 opacity-90 drop-shadow-[0_0_8px_rgba(234,179,8,0.5)] relative z-10"
+                    className="w-32 md:w-40 opacity-90 drop-shadow-[0_0_15px_rgba(234,179,8,0.8)] relative z-10"
                 />
             </div>
         </div>,
@@ -143,7 +143,7 @@ const BowArrowAnimation = () => {
             ref={bowRef}
             src={BowImg} 
             alt="Ancient Bow" 
-            className="w-32 md:w-44 opacity-100 drop-shadow-[0_0_15px_rgba(234,179,8,0.3)]"
+            className="w-32 md:w-44 opacity-100 drop-shadow-[0_0_15px_rgba(234,179,8,0.3)] -translate-x-[10px]"
         />
       </div>
     </>

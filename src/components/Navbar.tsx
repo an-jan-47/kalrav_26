@@ -66,7 +66,7 @@ export const Navbar = () => {
     <nav
       className={cn(
         'fixed top-0 left-0 right-0 z-[100] transition-all duration-300',
-        scrolled ? 'bg-black/80 backdrop-blur-md pt-2 pb-2' : 'bg-transparent pt-6 pb-4'
+        scrolled ? 'bg-black/90 backdrop-blur-md pt-2 pb-0' : 'bg-transparent pt-6 pb-4'
       )}
     >
       <div className="w-full flex flex-col items-center">
@@ -91,9 +91,7 @@ export const Navbar = () => {
                 <NavLink to="/" className="relative z-30 font-kalrav text-2xl text-white tracking-widest pt-2 hover:text-orange-400 transition-colors drop-shadow-md">
                     KALRAV '<span className="font-kalrav text-2xl">26</span>
                 </NavLink>
-                
-                 {/* Simplified Glow Effect
-                <div className="absolute top-4 w-20 h-20 bg-orange-400/20 blur-xl rounded-full pointer-events-none" /> */}
+            
             </div>
 
             {/* Right Line & Links */}
@@ -109,11 +107,11 @@ export const Navbar = () => {
         </div>
 
         {/* Mobile Nav Header */}
-        <div className="md:hidden w-full px-6 flex justify-between items-center pb-4 border-b border-white/10">
+        <div className="md:hidden w-full px-6 flex justify-center items-center pb-4 border-b border-white/10 relative">
              <NavLink to="/" className="text-xl font-kalrav text-white tracking-widest">
                 KALRAV '26
              </NavLink>
-             <button onClick={() => setIsOpen(!isOpen)} className="text-white">
+             <button onClick={() => setIsOpen(!isOpen)} className="text-white absolute right-6">
                   {isOpen ? <X /> : <Menu />}
              </button>
         </div>
