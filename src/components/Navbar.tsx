@@ -14,6 +14,7 @@ const navItemsRight = [
   { name: 'COMPETITION', path: '/competitions' },
   { name: 'SPONSORS', path: '/sponsors' },
   { name: 'TEAM', path: '/team' },
+  
 ];
 
 const NavButton = ({ item, isActive }: { item: { name: string, path: string }, isActive: boolean }) => {
@@ -84,15 +85,15 @@ export const Navbar = () => {
 
             {/* Center Curve Logo Area */}
             <div className="relative shrink-0 -mb-[42px] z-20 flex flex-col items-center justify-start h-[100px] w-[200px]">
-                {/* SVG Curve Background */}
+                
                 
                 {/* Logo Text */}
                 <NavLink to="/" className="relative z-30 font-kalrav text-2xl text-white tracking-widest pt-2 hover:text-orange-400 transition-colors drop-shadow-md">
                     KALRAV '<span className="font-kalrav text-2xl">26</span>
                 </NavLink>
                 
-                 {/* Simplified Glow Effect */}
-                <div className="absolute top-4 w-20 h-20 bg-orange-400/20 blur-xl rounded-full pointer-events-none" />
+                 {/* Simplified Glow Effect
+                <div className="absolute top-4 w-20 h-20 bg-orange-400/20 blur-xl rounded-full pointer-events-none" /> */}
             </div>
 
             {/* Right Line & Links */}

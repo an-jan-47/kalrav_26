@@ -25,6 +25,8 @@ const Home = () => {
                 console.error("Failed to fetch home data", error);
             } finally {
                 setLoading(false);
+                // Signal that the page is ready (data fetched + mounted)
+                window.dispatchEvent(new Event("kalrav-page-loaded"));
             }
         };
         loadData();
