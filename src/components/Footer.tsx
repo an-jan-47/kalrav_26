@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Instagram, Twitter, Linkedin, Youtube } from 'lucide-react';
+import { Instagram, Linkedin, Youtube } from 'lucide-react';
 import BowArrowAnimation from './ui/BowArrowAnimation';
 
 interface FooterProps {

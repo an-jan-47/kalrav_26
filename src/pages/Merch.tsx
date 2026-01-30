@@ -4,7 +4,7 @@ import { fetchMerchProducts, type MerchProduct } from '../services/merch';
 import { LazyImage } from '../components/ui/LazyImage';
 import SEO from '../components/SEO';
 import { Layout } from '../components/Layout';
-import { Loader2, ShoppingBag, ArrowRight } from 'lucide-react';
+import { Loader2, ArrowRight } from 'lucide-react';
 
 
 const Merch = () => {

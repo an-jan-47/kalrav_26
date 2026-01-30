@@ -11,9 +11,9 @@ interface SEOProps {
 const SEO = ({ 
   title = "Kalrav '26 - Tamaḥkṣayaḥ", 
   description = "Kalrav '26: The Annual Cultural Fest of Deen Dayal Upadhyaya College. Join us for an electrifying celebration of music, dance, and art. Experience the Tamaḥkṣayaḥ!",
-  keywords = "Kalrav, Kalrav 26, DDUC, Delhi University, Cultural Fest, College Fest,Tamaḥkṣayaḥ, Music, Dance",
+  keywords = "Kalrav, Kalrav 26,Kalrav DDUC ,kalrav dduc DDUC, Delhi University, Cultural Fest, College Fest,Tamaḥkṣayaḥ, Music, Dance",
   image = "/og-image.jpg", // Ensure this exists or use a default
-  url = "https://kalrav-26.vercel.app/"
+  url = "www.kalravdduc.in"
 }: SEOProps) => {
     const siteTitle = title === "Kalrav '26 - Tamaḥkṣayaḥ" ? title : `${title} | Kalrav '26`;
 
