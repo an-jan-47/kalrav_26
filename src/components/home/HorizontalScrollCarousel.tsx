@@ -23,7 +23,7 @@ export const HorizontalScrollCarousel = ({
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
-  // Hardcoded Review Texts (Exactly 5 as requested)
+  //  Review Texts 
   const REVIEW_TEXTS = useMemo(() => [
     { text: "The concerts were mind-blowing.", subtext: "Music Club Lead" },
     { text: "So well organized. Can't wait for '26.", subtext: "Sponsor Rep" },

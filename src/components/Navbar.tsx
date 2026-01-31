@@ -66,7 +66,7 @@ export const Navbar = () => {
     <nav
       className={cn(
         'fixed top-0 left-0 right-0 z-[100] transition-all duration-300',
-        scrolled ? 'bg-black/90 backdrop-blur-md pt-2 pb-0' : 'bg-transparent pt-6 pb-4'
+        scrolled ? 'bg-black/30 backdrop-blur-xl pt-2 pb-0' : 'bg-transparent pt-6 pb-4'
       )}
     >
       <div className="w-full flex flex-col items-center">

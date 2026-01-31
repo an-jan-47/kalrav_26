@@ -32,7 +32,7 @@ export const GalleryDaySection = ({ title, images }: GalleryDaySectionProps) => 
             <MasonryImage 
                 src={img.image_link} 
                 alt={`Day ${title} - Image ${img.id}`} 
-                className="w-full h-auto transition-all duration-500 ease-out group-hover:scale-[1.02] shadow-lg hover:shadow-orange-500/20"
+                className="w-full h-auto transition-all duration-500 ease-out group-hover:scale-[1.02]"
             />
             </motion.div>
         ))}

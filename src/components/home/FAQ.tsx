@@ -5,12 +5,12 @@ import { Plus, Minus } from 'lucide-react';
 const questions = [
   {
     question:"What Is Kalrav?",
-    answer:"Annual Culture Fest of. Deen Dayal Upadhyaya College,University of Delhi. To celebrate a year of togetherness with diversity and essence of Indian tradition , KALRAV- The cultural fest of Deen Dayal Upadhaya College,University of Delhi is organised"
+    answer:"Kalrav is the annual cultural fest of Deen Dayal Upadhyaya College, University of Delhi. It celebrates a year of togetherness, diversity, and the essence of Indian tradition, bringing students together through art, music, and culture."
 
   },
   {
     question: "When and where is Kalrav '26 taking place?",
-    answer: "Kalrav '26 will be held soon, at the main campus grounds. The venue maps will be shared on our social media handles closer to the event."
+    answer: "Kalrav ’26 will be held soon at the main campus grounds. Detailed venue maps will be shared on our official social media handles closer to the event"
   },
   {
     question: "How can I register for the competitions?",
@@ -26,7 +26,10 @@ const questions = [
   },
   {
     question:"Rules And Regulations",
-    answer:"Everyone is requested to follow these instructions: Entry starts from 8:00 AM onwards.  Gates close at 2:00 PM sharp. Please be on time.  Only college students are allowed.  Bring your college ID along with government issued ID (Aadhar, PAN Card, Driving License etc.) to avoid any hassle.  Everyone must install the ( sponser 1) app. It would be checked at the time of entry. Individuals are expected to install the sponsoring app beforehand to ensure smooth entry.  No food items will be allowed inside the concert ground.  Bring cash for all transactions due to possible congestion in the network.  No cars allowed in campus"
+    answer:`Everyone is requested to follow these instructions: 
+    Entry starts from 8:00 AM onwards. 
+    Gates close at 2:00 PM sharp. Please arrive on time.
+    Only college students are allowed.  Bring your college ID along with government issued ID (Aadhar, PAN Card, Driving License etc.) to avoid any hassle.  Everyone must install the ( sponser 1) app. It would be checked at the time of entry. Individuals are expected to install the sponsoring app beforehand to ensure smooth entry.  No food items will be allowed inside the concert ground.  Bring cash for all transactions due to possible congestion in the network.  No cars allowed in campus`
   }
 ];
 

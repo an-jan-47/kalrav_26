@@ -14,11 +14,8 @@ const Sponsors = () => {
   return (
     <Layout>
       <PageBackground src={SponserBg} parallax={true} opacity={0.4} />
-      <div className="container mx-auto px-6 py-12">
-        <h1 className="text-5xl font-kalrav text-center text-white mb-16 tracking-widest">OFFICIAL PARTNERS</h1>
-        <h2 className="text-3xl font-kalrav text-center text-white mb-16 tracking-widest">Coming Soon...</h2>
-        
-        
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center font-kalrav pt-20">
+        <h2 className="text-3xl md:text-4xl text-white/80 tracking-widest">COMING SOON</h2>
       </div>
     </Layout>
   );

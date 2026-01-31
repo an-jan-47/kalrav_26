@@ -3,12 +3,12 @@ import { supabase } from '../lib/supabase';
 export interface MerchProduct {
   id: number;
   created_at: string;
-  image_link: string;
+  images: string[]; // Changed from image_link: string
   name: string;
   description: string;
   is_active: boolean;
   order_index: number;
-  price: number; 
+  price: number;
 }
 
 export const fetchMerchProducts = async () => {
@@ -23,5 +23,10 @@ export const fetchMerchProducts = async () => {
     return [];
   }
 
-  return (data || []) as MerchProduct[];
+  // Parse comma-separated image links
+  return (data || []).map((product: any) => ({
+    ...product,
+    images: product.image_link ? product.image_link.split(',').map((url: string) => url.trim()) : [],
+    image_link: undefined, // internal cleanup
+  })) as MerchProduct[];
 };

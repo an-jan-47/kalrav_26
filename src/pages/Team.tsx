@@ -51,9 +51,9 @@ const CouncilSection = ({ members }: { members: TeamMember[] }) => {
                     if (!group || group.length === 0) return null;
 
                     return (
-                        <div key={key} className="flex flex-wrap justify-center gap-6 md:gap-8 w-full">
+                        <div key={key} className="flex flex-wrap justify-center gap-4 md:gap-5 w-full">
                             {group.map((member) => (
-                                <div key={member.id} className="w-[45%] md:w-[22%] lg:w-[20%]">
+                                <div key={member.id} className="w-[45%] md:w-[20%] lg:w-[15%]">
                                     <TeamMemberCard member={member} />
                                 </div>
                             ))}
@@ -65,7 +65,7 @@ const CouncilSection = ({ members }: { members: TeamMember[] }) => {
     );
 };
 
-// Reusing original Grid for generic "Team Heads" if they don't have strict hierarchy
+
 const GenericTeamSection = ({ title, members }: { title: string, members: TeamMember[] }) => {
     if (members.length === 0) return null;
     
@@ -80,7 +80,7 @@ const GenericTeamSection = ({ title, members }: { title: string, members: TeamMe
                 {title.toUpperCase()}
             </motion.h2>
             
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 max-w-7xl mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6 max-w-7xl mx-auto px-4">
                 {members.map((member) => (
                     <TeamMemberCard key={member.id} member={member} />
                 ))}
@@ -90,7 +90,7 @@ const GenericTeamSection = ({ title, members }: { title: string, members: TeamMe
 };
 
 const Team = () => {
-    // ... (state and effects same as before, simplified since sorting is handled in render primarily, but keeping sorting in useEffect is harmless)
+   
    const [council, setCouncil] = useState<TeamMember[]>([]);
    const [team, setTeam] = useState<TeamMember[]>([]);
    const [loading, setLoading] = useState(true);
@@ -113,7 +113,7 @@ const Team = () => {
  
    return (
      <Layout>
-       <PageBackground src={TeamBg} parallax={true} opacity={0.4} />
+       <PageBackground src={TeamBg} parallax={true} opacity={0.6} />
        <div className="min-h-screen pt-24 pb-20 bg-black"> 
            
          <div className="container mx-auto px-4">

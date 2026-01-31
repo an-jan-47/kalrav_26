@@ -21,11 +21,9 @@ export const About = () => {
               containerClassName="mb-8"
               textClassName="text-gray-100 text-lg md:text-xl font-kalrav-body font-normal leading-loose tracking-wide text-left drop-shadow-sm whitespace-pre-line"
           >
-            {`The revival of Kalrav, the annual extravaganza organized by Deen Dayal Upadhyaya, brings with it an electrifying anticipation! With over 20,000 students from 100+ colleges nationwide eagerly awaiting its return, Kalrav holds immense significance.
-
-This year's Kalrav pledges an unforgettable experience, showcasing a myriad of delights from tantalizing cuisine to vibrant music and playful activities. The lineup promises an even grander musical spectacle, building upon the legacy of past performances featuring icons like Honey Singh, Jubin Nautiyal, and Guru Randhawa.
-
-With renowned artists, musicians, and performers gracing the stage, the campus is set to transform into a captivating mosaic of creativity and camaraderie.`}
+            {`The revival of Kalrav, the annual cultural extravaganza of Deen Dayal Upadhyaya College, brings with it an electrifying wave of anticipation. With over 20,000 students from 100+ colleges across the country eagerly awaiting its return, Kalrav holds immense significance in the cultural calendar.
+This year, Kalrav promises an unforgettable experience, offering a vibrant blend of tantalizing cuisine, soulful music, and engaging activities. The lineup is set to deliver an even grander musical spectacle, continuing the legacy of iconic performances by artists such as Honey Singh, Jubin Nautiyal, and Guru Randhawa.
+With renowned artists, musicians, and performers gracing the stage, the campus will transform into a captivating mosaic of creativity, culture, and camaraderie`}
             
           </ScrollReveal>
 

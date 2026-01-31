@@ -11,7 +11,19 @@ const Merch = () => {
     // ... state logic remains same
     const [products, setProducts] = useState<MerchProduct[]>([]);
     const [activeProduct, setActiveProduct] = useState<MerchProduct | null>(null);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        setCurrentImageIndex(0);
+        // Prefetch images for smooth sliding
+        if (activeProduct?.images) {
+            activeProduct.images.forEach((src) => {
+                const img = new Image();
+                img.src = src;
+            });
+        }
+    }, [activeProduct]);
 
     useEffect(() => {
         const loadMerch = async () => {
@@ -42,7 +54,7 @@ const Merch = () => {
             <SEO
                 title="Merch"
                 description="Exclusive Kalrav '26 Merchandise using premium quality materials. Grab yours now!"
-                image={activeProduct?.image_link}
+                image={activeProduct?.images[0]}
             />
 
             <div className="relative h-[100dvh] w-full bg-kalrav-dark flex flex-col pt-14 md:pt-16 overflow-hidden">
@@ -82,8 +94,8 @@ const Merch = () => {
                             </AnimatePresence>
                         </div>
 
-                        {/* Center: Image (Floating) */}
-                        <div className="w-full h-full flex items-center justify-center relative order-2 py-4 lg:py-0">
+                        {/* Center: Image (Floating Slider) */}
+                        <div className="w-full h-full flex flex-col items-center justify-center relative order-2 py-4 lg:py-0 overflow-visible">
                             <AnimatePresence mode="wait">
                                 {activeProduct && (
                                     <motion.div
@@ -92,19 +104,76 @@ const Merch = () => {
                                         animate={{ opacity: 1, scale: 1 }}
                                         exit={{ opacity: 0, scale: 0.95 }}
                                         transition={{ duration: 0.4 }}
-                                        className="w-full h-full flex items-center justify-center"
+                                        className="w-full h-full flex flex-col items-center justify-center relative group/slider"
                                     >
-                                        <motion.div
-                                            animate={{ y: [0, -10, 0] }}
-                                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                            className="w-full flex justify-center items-center"
-                                        >
-                                            <img
-                                                src={activeProduct.image_link}
-                                                alt={activeProduct.name}
-                                                className="w-auto h-[35vh] md:h-[45vh] lg:h-[55vh] max-h-[500px] object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.5)]"
-                                            />
-                                        </motion.div>
+                                        <div className="relative w-full h-[35vh] md:h-[45vh] lg:h-[55vh] max-h-[500px] flex items-center justify-center">
+                                            <AnimatePresence mode="popLayout" custom={currentImageIndex}>
+                                                <motion.img
+                                                    key={`${activeProduct.id}-${currentImageIndex}`}
+                                                    src={activeProduct.images[currentImageIndex]}
+                                                    alt={activeProduct.name}
+                                                    initial={{ opacity: 0, x: 20 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    exit={{ opacity: 0, x: -20 }}
+                                                    transition={{ duration: 0.3 }}
+                                                    drag="x"
+                                                    dragConstraints={{ left: 0, right: 0 }}
+                                                    dragElastic={0.2}
+                                                    onDragEnd={(_, { offset, velocity }) => {
+                                                        const swipe = Math.abs(offset.x) * velocity.x;
+                                                        if (swipe < -100 || offset.x < -100) {
+                                                              // Next
+                                                              if (currentImageIndex < activeProduct.images.length - 1) {
+                                                                  setCurrentImageIndex(currentImageIndex + 1);
+                                                              }
+                                                        } else if (swipe > 100 || offset.x > 100) {
+                                                              // Prev
+                                                              if (currentImageIndex > 0) {
+                                                                  setCurrentImageIndex(currentImageIndex - 1);
+                                                              }
+                                                        }
+                                                    }}
+                                                    className="absolute w-auto h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.5)] cursor-grab active:cursor-grabbing"
+                                                />
+                                            </AnimatePresence>
+
+                                            {/* Navigation Buttons (Desktop) */}
+                                            {activeProduct.images.length > 1 && (
+                                              <>
+                                                <button 
+                                                    onClick={(e) => { e.stopPropagation(); if (currentImageIndex > 0) setCurrentImageIndex(currentImageIndex - 1); }}
+                                                    disabled={currentImageIndex === 0}
+                                                    className={`absolute left-0 p-2 rounded-full bg-black/20 text-white backdrop-blur-sm transition-opacity ${currentImageIndex === 0 ? 'opacity-0 pointer-events-none' : 'opacity-0 group-hover/slider:opacity-100 hover:bg-black/40'}`}
+                                                >
+                                                    ←
+                                                </button>
+                                                <button 
+                                                    onClick={(e) => { e.stopPropagation(); if (currentImageIndex < activeProduct.images.length - 1) setCurrentImageIndex(currentImageIndex + 1); }}
+                                                    disabled={currentImageIndex === activeProduct.images.length - 1}
+                                                    className={`absolute right-0 p-2 rounded-full bg-black/20 text-white backdrop-blur-sm transition-opacity ${currentImageIndex === activeProduct.images.length - 1 ? 'opacity-0 pointer-events-none' : 'opacity-0 group-hover/slider:opacity-100 hover:bg-black/40'}`}
+                                                >
+                                                    →
+                                                </button>
+                                              </>
+                                            )}
+                                        </div>
+
+                                        {/* Pagination Dots */}
+                                        {activeProduct.images.length > 1 && (
+                                            <div className="flex gap-2 mt-4 z-10">
+                                                {activeProduct.images.map((_, idx) => (
+                                                    <button
+                                                        key={idx}
+                                                        onClick={() => setCurrentImageIndex(idx)}
+                                                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                                                            currentImageIndex === idx 
+                                                                ? 'bg-orange-500 w-6' 
+                                                                : 'bg-white/20 hover:bg-white/40'
+                                                        }`}
+                                                    />
+                                                ))}
+                                            </div>
+                                        )}
                                     </motion.div>
                                 )}
                             </AnimatePresence>
@@ -170,7 +239,7 @@ const Merch = () => {
                                     >
                                         <div className="absolute inset-0 bg-gray-900">
                                             <LazyImage
-                                                src={product.image_link}
+                                                src={product.images[0]}
                                                 alt={product.name}
                                                 className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity duration-500"
                                             />

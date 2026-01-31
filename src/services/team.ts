@@ -7,12 +7,13 @@ export interface TeamMember {
   category: 'council' | 'team';
   team_member?: string;
   position?: string;
+  name?: string;
 }
 
 export const fetchTeamData = async () => {
   const { data, error } = await supabase
     .from('teams')
-    .select('id, image_url, instagram_url, category, position')
+    .select('id, name, image_url, instagram_url, category, position')
     .order('id', { ascending: true });
 
   if (error) {

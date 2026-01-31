@@ -20,7 +20,6 @@ const TeamMemberCard = ({ member }: TeamMemberCardProps) => {
 
     if (!isFlipped && !memberDetails && !isLoading) {
       setIsLoading(true);
-      // Flip immediately for better UX
       setIsFlipped(true); 
       
       try {
@@ -51,51 +50,63 @@ const TeamMemberCard = ({ member }: TeamMemberCardProps) => {
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
         style={{ transformStyle: 'preserve-3d' }}
       >
-        {/* Front Face */}
-        <div className="aspect-[3/4] w-full relative overflow-hidden rounded-xl backface-hidden bg-transparent">
-           {/* Image */}
-           <div className="w-full h-full transform transition-transform duration-500 group-hover:scale-103">
-              <LazyImage 
-                  src={member.image_url} 
-                  alt={member.category} 
-                  className="w-full h-full object-cover bg-transparent"
-              />
+        <div className="w-full h-full relative overflow-hidden rounded-xl backface-hidden bg-white/5 backdrop-blur-md border border-white/10 flex flex-col shadow-xl">
+           <div className="h-[75%] w-full relative overflow-hidden bg-black/20">
+              <div className="w-full h-full transform transition-transform duration-500 group-hover:scale-105">
+                <LazyImage 
+                    src={member.image_url} 
+                    alt={member.category} 
+                    className="w-full h-full object-cover"
+                />
+              </div>
+              
+              {member.instagram_url && (
+                <a 
+                  href={member.instagram_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute top-3 right-3 z-30"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                   <div className="text-white/80 hover:text-orange-400 transition-colors duration-300 p-2 rounded-full bg-black/40 border border-white/10 hover:bg-black/60 backdrop-blur-sm">
+                       <Instagram className="w-4 h-4 md:w-5 md:h-5" />
+                   </div>
+                </a>
+               )}
            </div>
-           
-           {member.instagram_url && (
-               <a 
-                 href={member.instagram_url}
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 className="absolute bottom-3 right-3 md:bottom-3 md:right-4 z-20"
-                 onClick={(e) => e.stopPropagation()}
-               >
-                  <div className="text-white/60 hover:text-orange-400 transition-colors duration-300 p-2 md:p-2.5 rounded-full bg-black/40 border border-white/10 hover:border-orange-500/50 hover:bg-orange-500/10 hover:shadow-[0_0_15px_rgba(168,85,247,0.5)] backdrop-blur-sm">
-                      <Instagram className="w-5 h-5 md:w-6 md:h-6" />
-                  </div>
-               </a>
-           )}
+
+           <div className="h-[25%] w-full flex flex-col items-center justify-center p-2 text-center bg-white/5 border-t border-white/5">
+                {member.name && (
+                   <h3 className="text-white font-kalrav text-lg md:text-xl tracking-wider leading-tight mb-1">
+                       {member.name}
+                   </h3>
+               )}
+               {member.position && (
+                   <div className="text-orange-300 font-mono text-[10px] md:text-xs uppercase font-bold tracking-widest opacity-90">
+                       {member.position}
+                   </div>
+               )}
+           </div>
         </div>
 
-        {/* Back Face */}
         {isTeam && (
             <div 
-                className="absolute inset-0 w-full h-full bg-gray-900/95 backdrop-blur-md rounded-xl border border-white/20 backface-hidden rotate-y-180 flex flex-col justify-center items-center p-3 md:p-6 text-center shadow-[0_0_30px_rgba(234,88,12,0.15)]"
+                className="absolute inset-0 w-full h-full bg-black/60 backdrop-blur-md rounded-xl border border-white/10 backface-hidden rotate-y-180 flex flex-col justify-center items-center p-3 md:p-6 text-center shadow-[0_0_30px_rgba(234,88,12,0.1)]"
                 style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
             >
-                <h3 className="text-orange-400 font-kalrav text-lg md:text-2xl tracking-widest mb-2 md:mb-4">TEAM MEMBERS</h3>
-                <div className="w-8 md:w-12 h-0.5 bg-orange-500/50 mb-3 md:mb-6 rounded-full"></div>
+                <h3 className="text-orange-400 font-kalrav text-base md:text-xl tracking-widest mb-2">TEAM MEMBERS</h3>
+                <div className="w-8 md:w-12 h-0.5 bg-orange-500/50 mb-2 md:mb-4 rounded-full"></div>
                 
                 <div className="w-full h-full flex flex-col items-center justify-start overflow-hidden">
                     {isLoading ? (
                         <div className="flex-1 flex items-center justify-center text-orange-400">
-                            <Loader2 className="w-6 h-6 animate-spin" />
+                            <Loader2 className="w-5 h-5 animate-spin" />
                         </div>
                     ) : (
-                        <div className="space-y-1 md:space-y-2 overflow-y-auto max-h-[85%] custom-scrollbar w-full px-1 md:px-2">
+                        <div className="space-y-1 overflow-y-auto max-h-[85%] custom-scrollbar w-full px-1">
                              {memberDetails ? (
                                 memberDetails.split(',').map((name, index) => (
-                                    <p key={index} className="text-white/80 font-medium tracking-wide text-xs md:text-lg border-b border-white/5 py-1 last:border-0 hover:text-white transition-colors">
+                                    <p key={index} className="text-white/80 font-medium tracking-wide text-[10px] md:text-sm border-b border-white/5 py-1 last:border-0 hover:text-white transition-colors">
                                         {name.trim()}
                                     </p>
                                 ))
