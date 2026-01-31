@@ -10,7 +10,7 @@ const CouncilSection = ({ members }: { members: TeamMember[] }) => {
     if (members.length === 0) return null;
 
     // Defined hierarchy order
-    const hierarchy = ['mentor', 'convenor', 'cultural_sec', 'oc_head', 'creative_dir', 'oc_committee'];
+    const hierarchy = ['mentor', 'cultural_secretary', 'convenor', 'creative_director', 'oc_team_head', 'oc_committee'];
     
     // Group members by position (handling variants like oc_commmitee)
     const groupedMembers: Record<string, TeamMember[]> = {};
@@ -19,15 +19,18 @@ const CouncilSection = ({ members }: { members: TeamMember[] }) => {
     hierarchy.forEach(key => groupedMembers[key] = []);
     
     members.forEach(member => {
-        let pos = member.position ? member.position.toLowerCase() : 'other';
-        // Normalize typos/variants
-        if (pos === 'oc_commmitee') pos = 'oc_committee';
+        let pos = member.position ? member.position.toLowerCase().trim() : 'other';
+        
+        // Normalize positions
+        if (pos === 'cultural secretary') pos = 'cultural_secretary';
+        else if (pos === 'creative director') pos = 'creative_director';
+        else if (pos === 'oc team lead' || pos === 'oc team head') pos = 'oc_team_head';
+        else if (pos.includes('committee')) pos = 'oc_committee'; 
         
         if (hierarchy.includes(pos)) {
             groupedMembers[pos].push(member);
         } else {
-             // Fallback for unexpected positions, maybe put them at the end or ignore? 
-             // Ideally we shouldn't have 'other' in Council based on user request, but for safety:
+            // Fallback
             if (!groupedMembers['other']) groupedMembers['other'] = [];
             groupedMembers['other'].push(member);
             if (!hierarchy.includes('other')) hierarchy.push('other');
