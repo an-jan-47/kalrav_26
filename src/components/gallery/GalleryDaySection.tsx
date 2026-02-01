@@ -23,7 +23,7 @@ export const GalleryDaySection = ({ title, images }: GalleryDaySectionProps) => 
         {images.map((img, index) => (
             <motion.div 
             key={img.id} 
-            className="break-inside-avoid mb-6 group"
+            className="break-inside-avoid md:mb-6 group relative aspect-[4/5] md:aspect-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
@@ -32,7 +32,7 @@ export const GalleryDaySection = ({ title, images }: GalleryDaySectionProps) => 
             <MasonryImage 
                 src={img.image_link} 
                 alt={`Day ${title} - Image ${img.id}`} 
-                className="w-full h-auto transition-all duration-500 ease-out group-hover:scale-[1.02]"
+                className="w-full h-full md:h-auto transition-all duration-500 ease-out group-hover:scale-[1.02]"
             />
             </motion.div>
         ))}

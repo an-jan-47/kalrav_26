@@ -34,7 +34,7 @@ export const MasonryImage = ({ src, alt, className, ...props }: MasonryImageProp
   return (
     <div 
         ref={containerRef}
-        className={cn("relative overflow-hidden bg-gray-900/50 rounded-xl min-h-[200px]", className)}
+        className={cn("relative overflow-hidden bg-transparent rounded-xl min-h-[200px]", className)}
     >
       {inView && (
         <motion.img
@@ -47,13 +47,13 @@ export const MasonryImage = ({ src, alt, className, ...props }: MasonryImageProp
             }}
             transition={{ duration: 0.7, ease: "easeOut" }}
             onLoad={() => setLoaded(true)}
-            className="block w-full h-auto object-cover"
+            className="block w-full h-full object-cover"
             {...props}
         />
       )}
 
       {(!inView || !loaded) && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-900">
+        <div className="absolute inset-0 flex items-center justify-center bg-transparent">
             <div className="w-8 h-8 border-2 border-white/20 border-t-orange-500 rounded-full animate-spin" />
         </div>
       )}

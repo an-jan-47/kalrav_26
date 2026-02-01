@@ -20,7 +20,7 @@ export const LazyImage = ({ src, alt, className, ...props }: LazyImageProps) => 
         observer.disconnect();
       }
     }, {
-      rootMargin: '100px', // Load just before entering viewport
+      rootMargin: '200px', // Load well before entering viewport for smoother experience
       threshold: 0.1
     });
 

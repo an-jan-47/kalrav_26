@@ -1,133 +1,102 @@
 import { useEffect, useState } from 'react';
 import { Layout } from '../components/Layout';
-import { fetchTeamData, type TeamMember } from '../services/team';
-import TeamMemberCard from '../components/team/TeamMemberCard';
-import { motion } from 'framer-motion';
+import { fetchTeamData, groupMembersByHierarchy, type TeamMember } from '../services/team';
+import TeamSection from '../components/team/TeamSection';
 import { PageBackground } from '../components/ui/PageBackground';
 import TeamBg from '../assets/bg/team.webp';
-
-const CouncilSection = ({ members }: { members: TeamMember[] }) => {
-    if (members.length === 0) return null;
-
-    // Defined hierarchy order
-    const hierarchy = ['mentor', 'cultural_secretary', 'convenor', 'creative_director', 'oc_team_head', 'oc_committee'];
-    
-    // Group members by position (handling variants like oc_commmitee)
-    const groupedMembers: Record<string, TeamMember[]> = {};
-    
-    // Initialize groups
-    hierarchy.forEach(key => groupedMembers[key] = []);
-    
-    members.forEach(member => {
-        let pos = member.position ? member.position.toLowerCase().trim() : 'other';
-        
-        // Normalize positions
-        if (pos === 'cultural secretary') pos = 'cultural_secretary';
-        else if (pos === 'creative director') pos = 'creative_director';
-        else if (pos === 'oc team lead' || pos === 'oc team head') pos = 'oc_team_head';
-        else if (pos.includes('committee')) pos = 'oc_committee'; 
-        
-        if (hierarchy.includes(pos)) {
-            groupedMembers[pos].push(member);
-        } else {
-            // Fallback
-            if (!groupedMembers['other']) groupedMembers['other'] = [];
-            groupedMembers['other'].push(member);
-            if (!hierarchy.includes('other')) hierarchy.push('other');
-        }
-    });
-
-    return (
-        <div className="mb-20">
-            <motion.h2 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-3xl md:text-4xl font-kalrav text-center text-white mb-12 tracking-widest drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]"
-            >
-                OUR CULTURAL COUNCIL
-            </motion.h2>
-            
-            <div className="flex flex-col gap-12 max-w-7xl mx-auto px-4">
-                {hierarchy.map((key) => {
-                    const group = groupedMembers[key];
-                    if (!group || group.length === 0) return null;
-
-                    return (
-                        <div key={key} className="flex flex-wrap justify-center gap-4 md:gap-5 w-full">
-                            {group.map((member) => (
-                                <div key={member.id} className="w-[45%] md:w-[20%] lg:w-[15%]">
-                                    <TeamMemberCard member={member} />
-                                </div>
-                            ))}
-                        </div>
-                    );
-                })}
-            </div>
-        </div>
-    );
-};
-
-
-const GenericTeamSection = ({ title, members }: { title: string, members: TeamMember[] }) => {
-    if (members.length === 0) return null;
-    
-    return (
-        <div className="mb-20">
-            <motion.h2 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="text-3xl md:text-4xl font-kalrav text-center text-white mb-12 tracking-widest drop-shadow-[0_0_15px_rgba(139,92,246,0.5)]"
-            >
-                {title.toUpperCase()}
-            </motion.h2>
-            
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6 max-w-7xl mx-auto px-4">
-                {members.map((member) => (
-                    <TeamMemberCard key={member.id} member={member} />
-                ))}
-            </div>
-        </div>
-    );
-};
+import { Loader2 } from 'lucide-react';
 
 const Team = () => {
-   
    const [council, setCouncil] = useState<TeamMember[]>([]);
    const [team, setTeam] = useState<TeamMember[]>([]);
    const [loading, setLoading] = useState(true);
+   const [error, setError] = useState<string | null>(null);
  
    useEffect(() => {
+     let mounted = true;
+
      const loadData = async () => {
        try {
          const { council, team } = await fetchTeamData();
-         // Basic sort can stay, grouping handles the rest
-         setCouncil(council);
-         setTeam(team);
-       } catch (error) {
-         console.error("Failed to load team data", error);
+         
+         if (mounted) {
+             setCouncil(council);
+             setTeam(team);
+         }
+       } catch (err) {
+         console.error("Failed to load team data", err);
+         if (mounted) {
+             setError("Failed to load team data. Please try again later.");
+         }
        } finally {
-         setLoading(false);
+         if (mounted) {
+             setLoading(false);
+         }
        }
      };
+
      loadData();
+     
+     return () => { mounted = false; };
    }, []);
- 
+   
+   const { grouped: groupedCouncil, sortedKeys } = groupMembersByHierarchy(council);
+   
+   // Calculate running index for staggered animation continuity
+   let runningIndex = 0;
+
    return (
      <Layout>
-       <PageBackground src={TeamBg} parallax={true} opacity={0.6} />
-       <div className="min-h-screen pt-24 pb-20 bg-black"> 
+       <PageBackground src={TeamBg} parallax={true} opacity={0.7} />
+       <div className="min-h-screen pt-24 pb-20 bg-black text-white"> 
            
          <div className="container mx-auto px-4">
              {loading ? (
-                 <div className="flex justify-center items-center min-h-[40vh]">
-                     <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-orange-500"></div>
+                 <div className="flex flex-col justify-center items-center min-h-[50vh] space-y-4">
+                     <Loader2 className="h-12 w-12 animate-spin text-orange-500" />
+                     <p className="text-gray-400 animate-pulse">Summoning the Council...</p>
+                 </div>
+             ) : error ? (
+                 <div className="flex justify-center items-center min-h-[50vh]">
+                     <div className="text-red-400 bg-red-900/10 border border-red-500/20 p-6 rounded-lg backdrop-blur-md">
+                         <p>{error}</p>
+                     </div>
                  </div>
              ) : (
                  <>
-                     <CouncilSection members={council} />
-                     <GenericTeamSection title="Team Heads" members={team} />
+                     {/* Council Sections */}
+                     <div className="mb-24">
+                        <h2 className="text-3xl md:text-5xl font-kalrav text-center text-white mb-16 tracking-widest drop-shadow-[0_0_25px_rgba(249,115,22,0.6)]">
+                            OUR CULTURAL COUNCIL
+                        </h2>
+                        
+                        {sortedKeys.map((key) => {
+                            const group = groupedCouncil[key];
+                            if (!group || group.length === 0) return null;
+
+                            // Capture current start index for this group
+                            const startIndex = runningIndex;
+                            // Update running index for next group
+                            runningIndex += group.length;
+
+                            return (
+                                <TeamSection 
+                                    key={key} 
+                                    title="" // Title specific groups if needed, or keep unified under main header
+                                    members={group} 
+                                    startIndex={startIndex}
+                                    className="mb-8 last:mb-0"
+                                />
+                            );
+                        })}
+                     </div>
+
+                     {/* Team Heads Section */}
+                     <TeamSection 
+                        title="Team Heads" 
+                        members={team} 
+                        startIndex={runningIndex} // Continue animation sequence
+                     />
                  </>
              )}
          </div>

@@ -3,6 +3,7 @@ import { Layout } from '../components/Layout';
 import { PageBackground } from '../components/ui/PageBackground';
 import { VideoSection } from '../components/ui/VideoSection';
 import { GalleryDaySection } from '../components/gallery/GalleryDaySection';
+import { GallerySkeleton } from '../components/gallery/GallerySkeleton';
 import { fetchGalleryImages, type GalleryImage } from '../services/gallery';
 import HomeBg from '../assets/bg/gallery.webp';
 
@@ -27,9 +28,15 @@ const Gallery = () => {
 
   return (
     <Layout noPadding={true}>
-      <PageBackground src={HomeBg} parallax={true} opacity={0.4} />
+      <PageBackground src={HomeBg} parallax={true} opacity={0.5} />
       
       <div className="relative z-10 pt-32 px-4 md:px-12 min-h-screen">
+            {loading ? (
+                <>
+                    <GallerySkeleton />
+                    <GallerySkeleton />
+                </>
+            ) : (
                 <div className="flex flex-col w-full">
                    <GalleryDaySection 
                         title="Highlights" 
@@ -47,6 +54,7 @@ const Gallery = () => {
                     <GalleryDaySection title="Day 2" images={images.filter(img => img.day === '2')} />
                     <GalleryDaySection title="Day 3" images={images.filter(img => img.day === '3')} />   
                 </div>
+            )}
 
             {!loading && images.length === 0 && (
                 <div className="text-center text-white/50 py-20">
