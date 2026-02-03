@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Instagram, Loader2 } from 'lucide-react';
 import { fetchTeamMemberDetails, type TeamMember } from '../../services/team';
 import { LazyImage } from '../ui/LazyImage';
-import cardBg from '../../assets/team/card.jpeg';
+import cardBg from '../../assets/team/card.webp';
 
 interface TeamMemberCardProps {
   member: TeamMember;
