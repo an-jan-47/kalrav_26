@@ -3,26 +3,27 @@ import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { CountdownTimer } from '../ui/CountdownTimer';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const Hero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLHeadingElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       // Check for reduced motion preference
       const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       
-      if (prefersReducedMotion || !textRef.current || !containerRef.current) return;
+      if (prefersReducedMotion || !contentRef.current || !containerRef.current) return;
 
       // Initial state
-      gsap.set(textRef.current, { scale: 1, opacity: 1 });
+      gsap.set(contentRef.current, { scale: 1, opacity: 1 });
 
       // Scroll-scrubbed animation
-      gsap.to(textRef.current, {
-        scale: 3,
+      gsap.to(contentRef.current, {
+        scale: 1.5,
         opacity: 0,
         ease: "none",
         scrollTrigger: {
@@ -40,13 +41,21 @@ export const Hero = () => {
   return (
     <section 
       ref={containerRef} 
-      className="relative h-screen w-full overflow-hidden flex items-center justify-center "
+      className="relative h-screen w-full overflow-hidden flex items-center justify-center"
     >
-      {/* Background container (preserved from previous code) */}
-      <div className="absolute inset-0 z-0 " />
+      {/* Background container */}
+      <div className="absolute inset-0 z-0 bg-hero-gradient opacity-10" />
 
-      {/* SEO ONLY: Hidden H1 */}
-      <h1 className="sr-only">KALRAV '26</h1>
+      {/* Hero Content */}
+      <div 
+        ref={contentRef} 
+        className="relative z-10 flex flex-col items-center gap-8 px-4"
+      >
+        <CountdownTimer targetDate="2026-02-26T00:00:00+05:30" />
+      </div>
+
+      {/* SEO ONLY: Hidden H1 (Kept for structure if needed, but we have a visible one now) */}
+      <h1 className="sr-only">KALRAV '26 - Cultural Fest</h1>
 
       {/* Scroll Indicator */}
       <motion.div

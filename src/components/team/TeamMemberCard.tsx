@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Instagram, Loader2 } from 'lucide-react';
 import { fetchTeamMemberDetails, type TeamMember } from '../../services/team';
 import { LazyImage } from '../ui/LazyImage';
+import cardBg from '../../assets/team/card.jpeg';
 
 interface TeamMemberCardProps {
   member: TeamMember;
@@ -15,26 +16,20 @@ const TeamMemberCard = memo(({ member, index }: TeamMemberCardProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
   
-  const isTeam = member.category?.toLowerCase() === 'team'; // increased robustness
+  const isTeam = member.category?.toLowerCase() === 'team';
 
   const handleFlip = async () => {
     if (!isTeam) return;
 
-    // Toggle flip state
     setIsFlipped(prev => !prev);
 
-    // Fetch details only if flipping to back and data is missing
     if (!isFlipped && !memberDetails && !isLoading) {
       setIsLoading(true);
       setHasError(false);
       
       try {
         const details = await fetchTeamMemberDetails(member.id);
-        if (details) {
-            setMemberDetails(details);
-        } else {
-            setMemberDetails(null); // Explicit null for empty
-        }
+        setMemberDetails(details || null);
       } catch (error) {
         console.error("Failed to load details", error);
         setHasError(true);
@@ -42,10 +37,6 @@ const TeamMemberCard = memo(({ member, index }: TeamMemberCardProps) => {
         setIsLoading(false);
       }
     }
-  };
-
-  const handleSocialClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
   };
 
   return (
@@ -57,126 +48,129 @@ const TeamMemberCard = memo(({ member, index }: TeamMemberCardProps) => {
       aria-expanded={isFlipped}
       tabIndex={isTeam ? 0 : -1}
       onKeyDown={(e) => {
-          if (isTeam && (e.key === 'Enter' || e.key === ' ')) {
-              e.preventDefault();
-              handleFlip();
-          }
+        if (isTeam && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          handleFlip();
+        }
       }}
     >
       <motion.div 
-        className="w-full h-full relative preserve-3d transition-all duration-500"
-        initial={{ opacity: 0, y: 30, rotateY: 0 }}
-        whileInView={{ opacity: 1, y: 0, rotateY: isFlipped ? 180 : 0 }}
-        viewport={{ once: true, margin: "-50px" }}
+        className="w-full h-full relative preserve-3d transition-all duration-700 ease-out will-change-transform"
+        initial={{ opacity: 0, y: 30 }}
         animate={{ 
-            rotateY: isFlipped ? 180 : 0
+          opacity: 1, 
+          y: 0, 
+          rotateY: isFlipped ? 180 : 0 
         }}
-        whileHover={{ scale: 1.05 }}
-        transition={{ 
-            type: "spring", 
-            stiffness: 120, 
-            damping: 20,
-            delay: Math.min(index * 0.05, 0.3) // Faster stagger for mobile feel
-        }}
+        whileHover={{ scale: 1.02 }}
+        transition={{ type: "spring", stiffness: 100, damping: 20, delay: Math.min(index * 0.05, 0.3) }}
         style={{ transformStyle: 'preserve-3d' }}
       >
         {/* Front Side */}
-        <div className="w-full h-full relative overflow-hidden rounded-xl backface-hidden bg-white/5 backdrop-blur-md border border-white/10 flex flex-col shadow-[0_4px_30px_rgba(0,0,0,0.1)] group-hover:shadow-[0_0_25px_rgba(249,115,22,0.4)] group-hover:border-orange-500/30 transition-all duration-300">
-           {/* Image Container */}
-           <div className="h-[78%] w-full relative overflow-hidden rounded-t-xl">
-              <div className="w-full h-full transform transition-transform duration-700 group-hover:scale-110">
-                <LazyImage 
-                    src={member.image_url} 
-                    alt={member.name || member.category} 
-                    className="w-full h-full object-cover filter grayscale-[20%] group-hover:grayscale-0 transition-all duration-500"
-                />
-              </div>
-              
-              {/* Gradient Overlay for text readability */}
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent" />
+        <div className="absolute inset-0 w-full h-full backface-hidden overflow-hidden rounded-xl shadow-2xl transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(249,115,22,0.6)]">
+           
+           {/* Card Background Frame - Layer 0 (Bottom) */}
+           <img 
+              src={cardBg} 
+              alt="Card Frame" 
+              className="absolute inset-0 w-full h-full object-fill z-0 pointer-events-none"
+              loading="eager"
+              decoding="sync"
+           />
 
-              {member.instagram_url && (
-                <a 
-                  href={member.instagram_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute top-2 right-2 z-30 opacity-100 transition-opacity duration-300 focus:opacity-100 focus:outline-none"
-                  onClick={handleSocialClick}
-                  aria-label={`Visit ${member.name}'s Instagram`}
-                >
-                   <div className="text-white hover:text-orange-400 p-2 bg-black/40 backdrop-blur-md rounded-full border border-white/20 transition-colors">
-                       <Instagram className="w-4 h-4" />
-                   </div>
-                </a>
-               )}
+           {/* Image Container - Layer 10 (Middle) */}
+           {/* Adjusted to fit the window of the frame, assuming the white bar is bottom ~20% */}
+           <div className="absolute top-[6%] left-[6%] right-[6%] bottom-[18%] z-10 rounded-t-lg overflow-hidden">
+              <LazyImage 
+                  src={member.image_url} 
+                  alt={member.name || member.category} 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 bg-transparent"
+                  decoding="async"
+              />
            </div>
 
-           {/* Content Box - Glass Effect */}
-           <div className="h-[22%] w-full flex flex-col items-center justify-center p-2 text-center bg-white/5 backdrop-blur-md border-t border-white/10 relative z-10 group-hover:bg-orange-900/20 transition-colors duration-300">
-                {member.name && (
-                   <h3 className="text-white font-kalrav text-lg md:text-xl tracking-wider leading-none mb-1 drop-shadow-lg break-words w-full px-2">
-                       {member.name}
-                   </h3>
-               )}
-               {member.position && (
-                   <div className="text-orange-300 font-kalrav text-[10px] md:text-xs uppercase tracking-[0.2em] font-semibold break-words w-full px-2">
-                       {member.position}
-                   </div>
-               )}
+           {/* Text Container - Layer 20 (Top) */}
+           {/* Positioned explicitly in the white bottom area */}
+           <div className="absolute bottom-0 left-0 right-0 h-[20%] z-20 flex flex-col items-center justify-center text-center px-1 pb-0.1">
+              <h3 className="font-sans text-black text-[clamp(0.8rem,3.5vw,1.4rem)] md:text-[1.6rem] tracking-normal uppercase font-extrabold mb-0.5 leading-none w-full truncate">
+                {member.name}
+              </h3>
+              <p className="font-sans text-black/70 text-[0.55rem] md:text-[0.7rem] font-bold uppercase tracking-widest leading-tight w-full truncate px-2">
+                 {member.position}
+              </p>
            </div>
+           
+           {/* Instagram Icon - Layer 30 (Topmost) */}
+           {member.instagram_url && (
+             <a 
+                href={member.instagram_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="absolute top-[8%] right-[8%] z-30 p-2 text-white/90 hover:text-orange-400 transition-colors drop-shadow-md bg-black/20 rounded-full backdrop-blur-sm"
+                aria-label="Instagram"
+             >
+                <Instagram className="w-4 h-4" />
+             </a>
+           )}
         </div>
 
         {/* Back Side (Team Members Only) */}
         {isTeam && (
             <div 
-                className="absolute inset-0 w-full h-full bg-black/40 backdrop-blur-xl rounded-xl border border-orange-500/20 backface-hidden rotate-y-180 flex flex-col justify-center items-center p-4 text-center shadow-[0_0_30px_rgba(249,115,22,0.2)] overflow-hidden"
+                className="absolute inset-0 w-full h-full bg-black/95 border border-white/10 rounded-xl backface-hidden rotate-y-180 flex flex-col p-5 shadow-xl overflow-hidden transition-all duration-300 group-hover:shadow-[0_0_30px_rgba(249,115,22,0.6)]"
                 style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
                 aria-hidden={!isFlipped}
             >
-                {/* Background decorative elements */}
-                <div className="absolute -top-10 -right-10 w-40 h-40 bg-orange-600/20 rounded-full blur-[50px] pointer-events-none" />
-                <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-600/20 rounded-full blur-[50px] pointer-events-none" />
+                {/* Decorative gradients - Reduced opacity for minimal look */}
+                <div className="absolute -top-10 -right-10 w-32 h-32 bg-purple-600/10 rounded-full blur-[40px] pointer-events-none" />
+                <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-orange-600/10 rounded-full blur-[40px] pointer-events-none" />
 
-                <h3 className="text-orange-300 font-kalrav text-xl tracking-widest mb-1 relative z-10 drop-shadow-md">THE TEAM</h3>
-                <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-orange-500 to-transparent mb-4 opacity-70"></div>
-                
-                <div className="w-full flex-1 flex flex-col items-center justify-start overflow-hidden relative z-10">
-                    {isLoading ? (
-                        <div className="flex-1 flex items-center justify-center text-orange-400">
-                            <Loader2 className="w-6 h-6 animate-spin" />
-                            <span className="sr-only">Loading team members...</span>
-                        </div>
-                    ) : hasError ? (
-                        <div className="flex-1 flex flex-col items-center justify-center text-red-400 space-y-2">
-                            <p className="text-xs">Failed to load</p>
-                            <button 
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleFlip(); // Re-trigger flip to try again logic eventually, or better just reset
-                                    setIsFlipped(true); // Keep flipped
-                                    setIsLoading(true);
-                                    // ideally would have a retry function
-                                }} 
-                                className="text-xs underline hover:text-white"
-                            >
-                                Retry
-                            </button>
-                        </div>
-                    ) : (
-                        <div className="space-y-1.5 overflow-y-auto max-h-full custom-scrollbar w-full px-2 py-1">
-                             {memberDetails ? (
-                                memberDetails.split(',').map((name, index) => (
-                                    <div key={index} className="group/item flex items-center justify-center w-full">
-                                        <p className="text-gray-200 font-kalrav-body text-sm hover:text-white transition-colors duration-200 tracking-wide text-center w-full border-b border-white/5 pb-1 last:border-0 shadow-sm">
+                <div className="relative z-10 flex flex-col h-full items-center text-center">
+                    <h3 className="text-lg md:text-xl font-sans font-bold text-white mb-2 tracking-widest uppercase opacity-90">THE TEAM</h3>
+                    <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-white/30 to-transparent mb-4" />
+                    
+                    <div className="w-full flex-1 overflow-hidden relative">
+                        {isLoading ? (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <Loader2 className="w-6 h-6 text-orange-400 animate-spin" />
+                            </div>
+                        ) : hasError ? (
+                           <div className="h-full flex flex-col items-center justify-center space-y-3">
+                                <p className="text-red-300 text-xs font-sans">Failed to load</p>
+                                <button 
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleFlip(); 
+                                        setTimeout(() => handleFlip(), 100);
+                                    }} 
+                                    className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 text-[10px] text-white transition-colors border border-white/10 font-sans"
+                                >
+                                    Retry
+                                </button>
+                           </div>
+                        ) : memberDetails ? (
+                            <div className="h-full overflow-y-auto custom-scrollbar pr-1 space-y-1">
+                                {memberDetails.split(',').map((name, idx) => (
+                                    <motion.div 
+                                        key={idx}
+                                        initial={{ opacity: 0, x: -5 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: idx * 0.03 }}
+                                        className="py-1 border-b border-white/5 last:border-0"
+                                    >
+                                        <p className="text-gray-300 font-sans text-xs md:text-sm tracking-wide hover:text-white transition-colors">
                                             {name.trim()}
                                         </p>
-                                    </div>
-                                ))
-                             ) : (
-                                <p className="text-white/40 italic text-xs mt-4">No members listed</p>
-                             )}
-                        </div>
-                    )}
+                                    </motion.div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="h-full flex items-center justify-center">
+                                <p className="text-white/30 text-xs italic font-sans">No additional members</p>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         )}

@@ -18,7 +18,7 @@ const TeamSection = ({ title, members, className = "", startIndex = 0 }: TeamSec
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="text-3xl md:text-4xl font-kalrav text-center text-white mb-12 tracking-widest drop-shadow-[0_0_15px_rgba(249,115,22,0.5)]"
+                className="text-3xl md:text-4xl font-kalrav text-center text-white mb-8 md:mb-12 tracking-widest drop-shadow-[0_0_15px_rgba(249,115,22,0.5)]"
             >
                 {title.toUpperCase()}
             </motion.h2>
