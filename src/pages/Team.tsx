@@ -47,14 +47,14 @@ const Team = () => {
 
    return (
      <Layout>
-       <PageBackground src={TeamBg} parallax={true} opacity={0.9} />
+       <PageBackground src={TeamBg} parallax={true} opacity={1} />
        <div className="min-h-screen pt-24 pb-20 bg-black text-white"> 
            
          <div className="container mx-auto px-4">
              {loading ? (
                  <div className="flex flex-col justify-center items-center min-h-[50vh] space-y-4">
                      <Loader2 className="h-12 w-12 animate-spin text-orange-500" />
-                     <p className="text-gray-400 animate-pulse">Summoning the Council...</p>
+                     <p className="text-gray-400 animate-pulse">Summoning the Council..</p>
                  </div>
              ) : error ? (
                  <div className="flex justify-center items-center min-h-[50vh]">
@@ -74,7 +74,7 @@ const Team = () => {
                             const group = groupedCouncil[key];
                             if (!group || group.length === 0) return null;
 
-                            // Capture current start index for this group
+                            
                             const startIndex = runningIndex;
                             // Update running index for next group
                             runningIndex += group.length;

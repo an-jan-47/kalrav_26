@@ -35,10 +35,10 @@ function App() {
       // Wait for Home component to signal it's ready (data fetched)
       window.addEventListener("kalrav-page-loaded", handleLoad);
       
-      // Safety timeout (10s) in case event doesn't fire
+      // Safety timeout (5s) in case event doesn't fire
       const timeout = setTimeout(() => {
          handleLoad();
-      }, 10000);
+      }, 5000);
 
       return () => {
         window.removeEventListener("kalrav-page-loaded", handleLoad);

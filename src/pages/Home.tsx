@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense, lazy } from 'react';
 import { Layout } from '../components/Layout';
 import { Hero } from '../components/home/Hero';
 import { About } from '../components/home/About';
-import { HorizontalScrollCarousel } from '../components/home/HorizontalScrollCarousel';
-import { FAQ } from '../components/home/FAQ';
 import { PageBackground } from '../components/ui/PageBackground';
-import { EventsSection } from '../components/home/EventsSection';
 import HomeBg from '../assets/bg/home.webp';
 import { fetchHomeData } from '../services/home';
+
+// Lazy load below-the-fold components
+const HorizontalScrollCarousel = lazy(() => import('../components/home/HorizontalScrollCarousel').then(module => ({ default: module.HorizontalScrollCarousel })));
+const FAQ = lazy(() => import('../components/home/FAQ').then(module => ({ default: module.FAQ })));
+const EventsSection = lazy(() => import('../components/home/EventsSection').then(module => ({ default: module.EventsSection })));
 
 const Home = () => {
     const [homeData, setHomeData] = useState<{
@@ -25,7 +27,7 @@ const Home = () => {
                 console.error("Failed to fetch home data", error);
             } finally {
                 setLoading(false);
-                // Signal that the page is ready (data fetched + mounted)
+                
                 window.dispatchEvent(new Event("kalrav-page-loaded"));
             }
         };
@@ -34,29 +36,35 @@ const Home = () => {
 
   return (
     <Layout noPadding={true} showBowArrow={true}>
-      <PageBackground src={HomeBg} parallax={true}/>
+      <PageBackground src={HomeBg} parallax={true} priority={true} />
       <div className="relative z-10">
         <Hero />
         <About />
         
-        <EventsSection 
-            events={homeData.legacies.map(l => ({
-                id: l.id,
-                image: l.image_link
-            }))} 
-        />
+        <Suspense fallback={<div className="h-96" />}>
+          <EventsSection 
+              events={homeData.legacies.map(l => ({
+                  id: l.id,
+                  image: l.image_link
+              }))} 
+          />
+        </Suspense>
 
         {homeData.reviews.length > 0 && (
-          <HorizontalScrollCarousel 
-            title="REVIEWS BY ATTENDEES"
-            items={homeData.reviews.map(r => ({
-                id: r.id,
-                image: r.image_link
-            }))}
-          />
+          <Suspense fallback={<div className="h-64" />}>
+            <HorizontalScrollCarousel 
+              title="REVIEWS BY ATTENDEES"
+              items={homeData.reviews.map(r => ({
+                  id: r.id,
+                  image: r.image_link
+              }))}
+            />
+          </Suspense>
         )}
         
-        <FAQ />
+        <Suspense fallback={<div className="h-screen" />}>
+          <FAQ />
+        </Suspense>
       </div>
     </Layout>
   );

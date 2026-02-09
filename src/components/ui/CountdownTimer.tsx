@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, memo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../utils/cn';
 
 interface TimeLeft {
@@ -63,12 +64,22 @@ const TimeUnit = memo(({ value, label, index, max }: { value: number; label: str
         />
       </svg>
 
-      <div className="flex-1 w-full flex items-center justify-center relative z-10">
-        <span 
-          key={formattedValue} 
-          className="text-4xl sm:text-5xl md:text-7xl font-sans font-bold text-white animate-slide-up leading-none drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] pb-2"
-        >
-          {formattedValue}
+      <div className="flex-1 w-full flex items-center justify-center relative z-10 overflow-hidden">
+        <AnimatePresence mode="popLayout">
+          <motion.span 
+            key={formattedValue}
+            initial={{ y: "100%", opacity: 0, filter: "blur(5px)" }}
+            animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+            exit={{ y: "-100%", opacity: 0, filter: "blur(5px)" }}
+            transition={{ duration: 0.6, ease: "easeInOut" }}
+            className="text-4xl sm:text-5xl md:text-7xl font-sans font-bold text-white leading-none drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] pb-2 block absolute"
+          >
+            {formattedValue}
+          </motion.span>
+        </AnimatePresence>
+        {/* Invisible spacer to maintain height */}
+        <span className="text-4xl sm:text-5xl md:text-7xl font-sans font-bold text-transparent leading-none pb-2 invisible">
+          88
         </span>
       </div>
       <span className="text-xs sm:text-sm md:text-lg font-sans font-medium text-white/60 tracking-widest uppercase group-hover:text-orange-400 transition-colors duration-300 relative z-10">

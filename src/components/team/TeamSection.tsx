@@ -26,7 +26,7 @@ const TeamSection = ({ title, members, className = "", startIndex = 0 }: TeamSec
             <div className="flex flex-wrap justify-center gap-4 md:gap-8 w-full max-w-7xl mx-auto px-2 md:px-4">
                 {members.map((member, i) => (
                     <div key={member.id} className="w-[47%] sm:w-[45%] md:w-[30%] lg:w-[22%] flex justify-center">
-                        <div className="w-full font-kalrav-body max-w-sm">
+                        <div className="w-full font-kalrav-body max-w-sm lg:max-w-[16rem] transform transition-all duration-500 hover:scale-105">
                             <TeamMemberCard member={member} index={startIndex + i} />
                         </div>
                     </div>

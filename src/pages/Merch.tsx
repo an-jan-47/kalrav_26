@@ -57,7 +57,7 @@ const Merch = () => {
                 image={activeProduct?.images[0]}
             />
 
-            <div className="relative h-[100dvh] w-full bg-kalrav-dark flex flex-col pt-14 md:pt-16 overflow-hidden">
+            <div className="relative h-[100dvh] w-full bg-kalrav-dark flex flex-col pt-6 md:pt-8 overflow-hidden">
                 {/* Background Typography */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
                     <h1 className="text-[18vw] font-kalrav text-white/[0.04] whitespace-nowrap leading-none tracking-tighter transform -translate-y-12">
@@ -66,7 +66,7 @@ const Merch = () => {
                 </div>
 
                 {/* Main Content Container (Flex Column) */}
-                <div className="relative z-10 flex flex-col w-full h-full max-w-[95%] lg:max-w-7xl mx-auto px-2 md:px-4">
+                <div className="relative z-10 flex flex-col w-full h-full max-w-[95%] lg:max-w-7xl mx-auto px-2 md:px-4 gap-10">
                     
                     {/* Upper Section: Hero Product (Takes available flexibility) */}
                     <div className="flex-grow grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 items-center min-h-0">
@@ -106,7 +106,10 @@ const Merch = () => {
                                         transition={{ duration: 0.4 }}
                                         className="w-full h-full flex flex-col items-center justify-center relative group/slider"
                                     >
-                                        <div className="relative w-full h-[35vh] md:h-[45vh] lg:h-[55vh] max-h-[500px] flex items-center justify-center">
+                                        <div className="relative w-full h-[40vh] md:h-[50vh] lg:h-[55vh] max-h-[600px] flex items-center justify-center">
+                                            {/* Radial Gradient for Visibility */}
+                                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.15)_0%,_transparent_70%)] opacity-100 blur-xl pointer-events-none" />
+                                            
                                             <AnimatePresence mode="popLayout" custom={currentImageIndex}>
                                                 <motion.img
                                                     key={`${activeProduct.id}-${currentImageIndex}`}
@@ -160,11 +163,11 @@ const Merch = () => {
 
                                         {/* Pagination Dots */}
                                         {activeProduct.images.length > 1 && (
-                                            <div className="flex gap-2 mt-4 z-10">
+                                            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-20">
                                                 {activeProduct.images.map((_, idx) => (
                                                     <button
                                                         key={idx}
-                                                        onClick={() => setCurrentImageIndex(idx)}
+                                                        onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(idx); }}
                                                         className={`w-2 h-2 rounded-full transition-all duration-300 ${
                                                             currentImageIndex === idx 
                                                                 ? 'bg-orange-500 w-6' 
@@ -221,20 +224,20 @@ const Merch = () => {
                     </div>
 
                     {/* Lower Section: Carousel Strip (Compact) */}
-                    <div className="w-full z-20 pb-4 lg:pb-8 flex-shrink-0">
-                        <div className="max-w-7xl mx-auto">
-                            <h4 className="text-white/30 text-[10px] font-bold tracking-widest mb-3 lg:ml-4 text-center lg:text-left">
+                    <div className="w-full z-20 pb-4 lg:pb-8 flex-shrink-0 flex justify-center">
+                        <div className="max-w-4xl w-full mx-auto px-4 md:px-12">
+                            <h4 className="text-white/30 text-[10px] font-bold tracking-widest mb-3 text-center">
                                 BROWSE COLLECTION
                             </h4>
                             {/* Hide scrollbar but allow scroll context */}
-                            <div className="flex items-center gap-4 overflow-x-auto no-scrollbar px-1 lg:px-4 snap-x snap-mandatory">
+                            <div className="flex items-center justify-center gap-4 overflow-x-auto no-scrollbar px-1 py-4 snap-x snap-mandatory">
                                 {products.map((product) => (
                                     <button
                                         key={product.id}
                                         onClick={() => handleProductSwitch(product)}
                                         className={`group relative flex-shrink-0 w-32 h-40 md:w-44 md:h-52 rounded-xl overflow-hidden transition-all duration-300 snap-center ${activeProduct?.id === product.id
-                                                ? 'ring-1 ring-orange-500 scale-100 shadow-lg shadow-orange-500/10'
-                                                : 'opacity-60 hover:opacity-100 hover:scale-105'
+                                                ? 'border-2 border-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.4)] scale-105 z-10'
+                                                : 'opacity-60 hover:opacity-100 hover:scale-105 border border-white/10'
                                             }`}
                                     >
                                         <div className="absolute inset-0 bg-gray-900">

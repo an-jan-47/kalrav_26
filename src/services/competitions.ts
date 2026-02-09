@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabase';
+import { CacheService } from '../utils/cache';
 
 export interface Competition {
   id: number;
@@ -8,14 +9,16 @@ export interface Competition {
 }
 
 export const fetchCompetitions = async (): Promise<Competition[]> => {
-  const { data, error } = await supabase
-    .from('competitions')
-    .select('id,category, poster_path, redirect_url');
+  return CacheService.get('competitions_data', async () => {
+    const { data, error } = await supabase
+      .from('competitions')
+      .select('id,category, poster_path, redirect_url');
 
-  if (error) {
-    console.error('Error fetching competitions:', error);
-    return [];
-  }
+    if (error) {
+      console.error('Error fetching competitions:', error);
+      return [];
+    }
 
-  return data || [];
+    return data || [];
+  });
 };

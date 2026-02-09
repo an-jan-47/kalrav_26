@@ -6,6 +6,7 @@ interface PageBackgroundProps {
   parallax?: boolean;
   opacity?: number;
   showOverlay?: boolean;
+  priority?: boolean;
 }
 
 export const PageBackground = ({ 
@@ -13,7 +14,8 @@ export const PageBackground = ({
   alt = "Background", 
   parallax = false,
   opacity = 1,
-  showOverlay = true 
+  showOverlay = true,
+  priority = false
 }: PageBackgroundProps) => {
   const { scrollY } = useScroll();
   
@@ -36,7 +38,9 @@ export const PageBackground = ({
         <img 
           src={src} 
           alt={alt} 
-          className="w-full h-full object-cover object-center bg-black/20" 
+          className="w-full h-full object-cover object-center bg-black/20"
+          loading={priority ? "eager" : "lazy"}
+          {...(priority ? { fetchPriority: "high" } : {})}
         />
         {/* Overlay for better text readability across all pages */}
         {showOverlay && <div className="absolute inset-0 bg-black/60" />} 

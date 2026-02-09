@@ -10,7 +10,7 @@ export const Footer = ({ showBowArrow = false }: FooterProps) => {
   const socialLinks = [
     { icon: Instagram, href: "https://www.instagram.com/kalrav_dduc/" },
     { icon: Youtube, href: "https://youtube.com/@kalravdduc?si=iIMVu6A4DkCEPjKb" },
-    { icon: Linkedin, href: "https://www.linkedin.com/in/kalrav-dduc-4642b32b5/?originalSubdomain=in" }
+    { icon: Linkedin, href: "" }
   ];
 
   return (

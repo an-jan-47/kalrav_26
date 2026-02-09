@@ -23,6 +23,7 @@ const Loader = ({ isLoading, onComplete }: LoaderProps) => {
 
   return (
     <div
+      style={{ backgroundColor: "#000000" }}
       className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-opacity duration-500 pointer-events-none ${
         isExiting ? "opacity-0" : "opacity-100"
       }`}

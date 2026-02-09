@@ -63,6 +63,9 @@ export const Hero = () => {
         animate={{ opacity: 0.5, y: [0, 10, 0] }}
         transition={{ delay: 2, duration: 2, repeat: Infinity }}
         className="absolute bottom-10 z-20 text-white cursor-pointer"
+        role="button"
+        aria-label="Scroll down to explore"
+        tabIndex={0}
       >
         <ChevronDown size={32} />
       </motion.div>
