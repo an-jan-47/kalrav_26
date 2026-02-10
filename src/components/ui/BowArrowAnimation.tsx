@@ -130,6 +130,8 @@ const BowArrowAnimation = () => {
                     ref={arrowImgRef}
                     src={ArrowImg} 
                     alt="Golden Arrow" 
+                    width={128}
+                    height={128}
                     className="w-32 md:w-40 opacity-90 drop-shadow-[0_0_15px_rgba(234,179,8,0.8)] relative z-10"
                 />
             </div>
@@ -143,6 +145,8 @@ const BowArrowAnimation = () => {
             ref={bowRef}
             src={BowImg} 
             alt="Ancient Bow" 
+            width={128}
+            height={128}
             className="w-32 md:w-44 opacity-100 drop-shadow-[0_0_15px_rgba(234,179,8,0.3)] -translate-x-[10px]"
         />
       </div>
