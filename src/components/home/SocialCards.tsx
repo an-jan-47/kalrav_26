@@ -98,8 +98,6 @@ export const SocialCards = ({ cards, className }: SocialCardsProps) => {
                <LazyImage 
                     src={card.thumbnail} 
                     alt={card.label || card.platform} 
-                    width={224}
-                    height={140}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                />
 
