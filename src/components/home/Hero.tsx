@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CountdownTimer } from '../ui/CountdownTimer';
 import { SocialCards } from './SocialCards';
+import { getOptimizedImageUrl } from '../../utils/image';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -60,28 +61,28 @@ export const Hero = () => {
                     id: '1',
                     platform: 'instagram',
                     url: 'https://www.instagram.com/reel/DUYCpV2E4BY/?igsh=MWM3cXlkZGI2NWM0cw==',
-                    thumbnail: 'https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/gallery/after_movie0.webp', 
+                    thumbnail: getOptimizedImageUrl('https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/gallery/after_movie0.webp'), 
                     label: 'Aftermovie'
                 },
                 {
                     id: '2',
                     platform: 'instagram',
                     url: 'https://www.instagram.com/reel/DUTDw80k6vH/?igsh=enhyZjRybzFlOTQ4',
-                    thumbnail: 'https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/gallery/date_reveal.webp',
+                    thumbnail: getOptimizedImageUrl('https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/gallery/date_reveal.webp'),
                     label: 'Date Reveal'
                 },
                 {
                     id: '3',
                     platform: 'merch',
                     url: '/merch',
-                    thumbnail: 'https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/merch/KALRAV_MERCH_SELLING__2__page-0006-removebg-preview.png',
+                    thumbnail: getOptimizedImageUrl('https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/merch/KALRAV_MERCH_SELLING__2__page-0006-removebg-preview.png'),
                     label: 'BUY MERCH'
                 },
                 {
                     id: '4',
                     platform: 'instagram',
                     url: 'https://www.instagram.com/reel/DUDnptdE6_N/?igsh=M3NkYnYweTRqejdv',
-                    thumbnail: 'https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/gallery/theme.webp', 
+                    thumbnail: getOptimizedImageUrl('https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/gallery/theme.webp'), 
                     label: 'Theme Reveal'
                 },
                 

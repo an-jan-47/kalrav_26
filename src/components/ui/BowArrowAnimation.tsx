@@ -35,8 +35,11 @@ const BowArrowAnimation = () => {
             if (!arrowWrapperRef.current || !bowRef.current) return;
             
             // Function to calculate target Y position
-            const getTargetY = () => {
-                if (!bowRef.current || !arrowWrapperRef.current) return 0; // Use wrapper ref
+            // Cached values to avoid layout thrashing
+            let cachedTargetY = 0;
+
+            const updateCachedValues = () => {
+                if (!bowRef.current || !arrowWrapperRef.current) return;
 
                 const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
                 const bowRectAbsolute = bowRef.current.getBoundingClientRect();
@@ -45,19 +48,25 @@ const BowArrowAnimation = () => {
                 const bowAbsoluteTop = bowRectAbsolute.top + scrollTop;
                 const bowViewportYAtBottom = bowAbsoluteTop - maxScroll;
 
-                // Adjust for alignment (center to center)
-                // Use wrapper height
                 const arrowHeight = arrowWrapperRef.current.offsetHeight; 
                 const bowHeight = bowRef.current.offsetHeight;
                 
                 const centerOffset = (bowHeight / 2) - (arrowHeight / 2);
                 
-                // Get margin form wrapper NOT img
                 const style = window.getComputedStyle(arrowWrapperRef.current);
                 const marginTop = parseFloat(style.marginTop) || 0;
 
-                return (bowViewportYAtBottom + centerOffset) - marginTop;
+                cachedTargetY = (bowViewportYAtBottom + centerOffset) - marginTop;
             };
+
+            // Initial calculation
+            updateCachedValues();
+
+            // Recalculate on resize/refresh
+            ScrollTrigger.addEventListener("refresh", updateCachedValues);
+            
+            // Function to return cached Y
+            const getTargetY = () => cachedTargetY;
 
             const tl = gsap.timeline({
                 scrollTrigger: {
