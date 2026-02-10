@@ -7,7 +7,7 @@
   src: url('./assets/fonts/Kalrav.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-  font-display: block;
+  font-display: swap;
 }
 
 @font-face {
@@ -15,7 +15,7 @@
   src: url('./assets/fonts/Marcellus-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-  font-display: block;
+  font-display: swap;
 }
 
 :root {
