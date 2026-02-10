@@ -75,7 +75,7 @@ export const Hero = () => {
                     platform: 'merch',
                     url: '/merch',
                     thumbnail: 'https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/merch/KALRAV_MERCH_SELLING__2__page-0006-removebg-preview.png',
-                    label: 'Grab Yours Now'
+                    label: 'BUY MERCH'
                 },
                 {
                     id: '4',

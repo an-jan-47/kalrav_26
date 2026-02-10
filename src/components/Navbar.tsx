@@ -111,7 +111,7 @@ export const Navbar = () => {
              <NavLink to="/" className="text-xl font-kalrav text-white tracking-widest">
                 KALRAV '26
              </NavLink>
-             <button onClick={() => setIsOpen(!isOpen)} className="text-white absolute right-6">
+             <button onClick={() => setIsOpen(!isOpen)} className="text-white absolute right-6" aria-label={isOpen ? "Close menu" : "Open menu"}>
                   {isOpen ? <X /> : <Menu />}
              </button>
         </div>

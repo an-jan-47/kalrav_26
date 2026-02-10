@@ -60,7 +60,7 @@ const Merch = () => {
             <div className="relative h-[100dvh] w-full bg-kalrav-dark flex flex-col pt-6 md:pt-8 overflow-hidden">
                 {/* Background Typography */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
-                    <h1 className="text-[18vw] font-sans font-black text-white/[0.02] whitespace-nowrap leading-none tracking-tighter transform -translate-y-12">
+                    <h1 className="text-[15vw] font-kalrav font-black text-white/[0.02] whitespace-nowrap leading-none tracking-tighter transform -translate-y-12">
                         KALRAV MERCH
                     </h1>
                 </div>
