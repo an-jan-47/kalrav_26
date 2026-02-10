@@ -47,7 +47,7 @@ const NavButton = ({ item, isActive }: { item: { name: string, path: string }, i
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(() => window.scrollY > 50);
   const location = useLocation();
 
   useEffect(() => {
