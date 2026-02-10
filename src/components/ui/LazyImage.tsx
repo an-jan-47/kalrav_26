@@ -47,6 +47,8 @@ export const LazyImage = ({ src, alt, className, ...props }: LazyImageProps) => 
           }}
           transition={{ duration: 0.5 }}
           onLoad={() => setLoaded(true)}
+          onError={() => setLoaded(true)} // Treat error as loaded to remove spinner, but maybe show fallback? 
+          // Better: Add error state.
           className="w-full h-full object-cover"
           {...props}
         />

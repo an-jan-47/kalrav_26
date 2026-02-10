@@ -60,18 +60,18 @@ const Merch = () => {
             <div className="relative h-[100dvh] w-full bg-kalrav-dark flex flex-col pt-6 md:pt-8 overflow-hidden">
                 {/* Background Typography */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
-                    <h1 className="text-[18vw] font-kalrav text-white/[0.04] whitespace-nowrap leading-none tracking-tighter transform -translate-y-12">
+                    <h1 className="text-[18vw] font-sans font-black text-white/[0.02] whitespace-nowrap leading-none tracking-tighter transform -translate-y-12">
                         KALRAV MERCH
                     </h1>
                 </div>
 
                 {/* Main Content Container (Flex Column) */}
-                <div className="relative z-10 flex flex-col w-full h-full max-w-[95%] lg:max-w-7xl mx-auto px-2 md:px-4 gap-10">
+                <div className="relative z-10 flex flex-col w-full h-full max-w-[98%] lg:max-w-[95%] mx-auto px-2 md:px-4 gap-4 lg:gap-10">
                     
                     {/* Upper Section: Hero Product (Takes available flexibility) */}
                     <div className="flex-grow grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 items-center min-h-0">
                         {/* Left: Description */}
-                        <div className="hidden lg:flex flex-col items-start justify-center space-y-4 order-1">
+                        <div className="hidden lg:flex flex-col items-start justify-center space-y-4 order-1 pl-4 lg:pl-12 mt-12">
                             <AnimatePresence mode="wait">
                                 {activeProduct && (
                                     <motion.div
@@ -80,12 +80,12 @@ const Merch = () => {
                                         animate={{ opacity: 1, x: 0 }}
                                         exit={{ opacity: 0, x: -20 }}
                                         transition={{ duration: 0.4 }}
-                                        className="space-y-2 text-left"
+                                        className="space-y-4 text-left w-full"
                                     >
-                                        <h3 className="text-white/40 text-xs font-bold tracking-[0.2em] uppercase">
+                                        <h3 className="text-white/40 text-xs font-bold tracking-[0.2em] uppercase font-sans">
                                             DESCRIPTION
                                         </h3>
-                                        <p className="text-white/80 text-lg lg:text-xl font-light leading-snug max-w-sm">
+                                        <p className="text-white/80 text-lg lg:text-xl font-light leading-relaxed max-w-lg font-sans whitespace-pre-line">
                                             {activeProduct.description}
                                         </p>
                                         <div className="h-1 w-12 bg-white/20 rounded-full mt-2" />
@@ -106,9 +106,9 @@ const Merch = () => {
                                         transition={{ duration: 0.4 }}
                                         className="w-full h-full flex flex-col items-center justify-center relative group/slider"
                                     >
-                                        <div className="relative w-full h-[40vh] md:h-[50vh] lg:h-[55vh] max-h-[600px] flex items-center justify-center">
-                                            {/* Radial Gradient for Visibility */}
-                                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(255,255,255,0.15)_0%,_transparent_70%)] opacity-100 blur-xl pointer-events-none" />
+                                        <div className="relative w-full h-[35vh] md:h-[50vh] lg:h-[55vh] max-h-[600px] flex items-center justify-center">
+                                            {/* Radial Gradient for Visibility - Orange Glow */}
+                                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(249,115,22,0.3)_0%,_transparent_70%)] opacity-100 blur-2xl pointer-events-none" />
                                             
                                             <AnimatePresence mode="popLayout" custom={currentImageIndex}>
                                                 <motion.img
@@ -136,7 +136,8 @@ const Merch = () => {
                                                               }
                                                         }
                                                     }}
-                                                    className="absolute w-auto h-full max-w-full object-contain filter drop-shadow-[0_15px_25px_rgba(0,0,0,0.5)] cursor-grab active:cursor-grabbing"
+                                                    whileHover={{ scale: 1.1, rotate: 2 }}
+                                                    className="absolute w-auto h-full max-w-full object-contain filter drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] cursor-grab active:cursor-grabbing transition-transform duration-500"
                                                 />
                                             </AnimatePresence>
 
@@ -192,26 +193,26 @@ const Merch = () => {
                                         animate={{ opacity: 1, x: 0 }}
                                         exit={{ opacity: 0, x: 20 }}
                                         transition={{ duration: 0.4 }}
-                                        className="flex flex-col items-center lg:items-end space-y-2 lg:space-y-4"
+                                        className="flex flex-col items-center lg:items-end space-y-2 lg:space-y-4 w-full"
                                     >
-                                        <div>
-                                            <h2 className="text-3xl md:text-5xl lg:text-6xl font-kalrav text-white tracking-wider leading-none">
+                                        <div className="w-full">
+                                            <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-5xl font-sans font-bold text-white tracking-wide leading-tight break-words px-2 lg:px-0">
                                                 {activeProduct.name}
                                             </h2>
                                             
                                         </div>
 
                                         {/* Mobile Description */}
-                                        <p className="lg:hidden text-white/70 text-sm max-w-[80%] leading-tight">
+                                        <p className="lg:hidden text-white/70 text-xs sm:text-sm max-w-[95%] leading-snug font-sans line-clamp-3">
                                             {activeProduct.description}
                                         </p>
 
-                                        <div className="flex flex-col items-center lg:items-end space-y-2 lg:space-y-4 mt-2">
-                                            <div className="text-3xl md:text-5xl font-bold text-white font-mono tracking-tighter">
+                                        <div className="flex flex-col items-center lg:items-end space-y-2 lg:space-y-4 mt-1 lg:mt-2">
+                                            <div className="text-xl sm:text-2xl md:text-4xl font-bold text-white font-mono tracking-tighter">
                                                 ₹{activeProduct.price}
                                             </div>
                                             <button className="group relative px-6 py-2 md:px-8 md:py-3 bg-white text-black font-bold text-sm md:text-lg rounded-full overflow-hidden transition-all hover:bg-orange-500 hover:text-white hover:scale-105">
-                                                <div className="relative z-10 flex items-center gap-2">
+                                                <div className="relative z-10 flex items-center gap-2 font-sans">
                                                     <span>BUY NOW</span>
                                                     <ArrowRight className="w-4 h-4 group-hover:-rotate-45 transition-transform duration-300" />
                                                 </div>
@@ -224,18 +225,18 @@ const Merch = () => {
                     </div>
 
                     {/* Lower Section: Carousel Strip (Compact) */}
-                    <div className="w-full z-20 pb-4 lg:pb-8 flex-shrink-0 flex justify-center">
+                    <div className="w-full z-20 pb-4 lg:pb-8 flex-shrink-0 flex justify-center min-h-[140px]">
                         <div className="max-w-4xl w-full mx-auto px-4 md:px-12">
-                            <h4 className="text-white/30 text-[10px] font-bold tracking-widest mb-3 text-center">
+                            <h4 className="text-white/30 text-[10px] font-bold tracking-widest mb-2 text-center font-sans">
                                 BROWSE COLLECTION
                             </h4>
                             {/* Hide scrollbar but allow scroll context */}
-                            <div className="flex items-center justify-center gap-4 overflow-x-auto no-scrollbar px-1 py-4 snap-x snap-mandatory">
+                            <div className="flex items-center justify-start md:justify-center gap-3 lg:gap-4 overflow-x-auto no-scrollbar px-1 py-4 snap-x snap-mandatory w-full">
                                 {products.map((product) => (
                                     <button
                                         key={product.id}
                                         onClick={() => handleProductSwitch(product)}
-                                        className={`group relative flex-shrink-0 w-32 h-40 md:w-44 md:h-52 rounded-xl overflow-hidden transition-all duration-300 snap-center ${activeProduct?.id === product.id
+                                        className={`group relative flex-shrink-0 w-28 h-36 md:w-44 md:h-52 rounded-xl overflow-hidden transition-all duration-300 snap-center ${activeProduct?.id === product.id
                                                 ? 'border-2 border-orange-500 shadow-[0_0_20px_rgba(249,115,22,0.4)] scale-105 z-10'
                                                 : 'opacity-60 hover:opacity-100 hover:scale-105 border border-white/10'
                                             }`}
@@ -248,11 +249,11 @@ const Merch = () => {
                                             />
                                         </div>
 
-                                        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black via-black/60 to-transparent flex flex-col justify-end p-3 text-left">
-                                            <h4 className={`font-kalrav uppercase text-lg leading-none mb-0.5 ${activeProduct?.id === product.id ? 'text-orange-400' : 'text-white'}`}>
+                                        <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black via-black/60 to-transparent flex flex-col justify-end p-2 md:p-3 text-left">
+                                            <h4 className={`font-sans font-bold uppercase text-[10px] md:text-sm leading-none mb-0.5 truncate ${activeProduct?.id === product.id ? 'text-orange-400' : 'text-white'}`}>
                                                 {product.name}
                                             </h4>
-                                            <span className="text-white/80 font-mono text-xs font-bold">
+                                            <span className="text-white/80 font-mono text-[10px] md:text-xs font-bold">
                                                 ₹{product.price}
                                             </span>
                                         </div>

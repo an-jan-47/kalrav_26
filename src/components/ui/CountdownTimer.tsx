@@ -17,18 +17,9 @@ interface CountdownTimerProps {
 const TimeUnit = memo(({ value, label, index, max }: { value: number; label: string; index: number; max: number }) => {
   // Format with leading zero
   const formattedValue = value < 10 ? `0${value}` : value.toString();
-  
-  // Calculate percentage (100 -> 0 as time decreases)
-  // Ensure we handle division by zero or negative logic if needed, but max is static.
-  // For standard countdown: value / max * 100.
-  // E.g. 59 secs / 60 = 98%. 0 secs = 0%.
+ 
   const percent = Math.min((value / max) * 100, 100);
   
-  // pathLength=100. stroke-dasharray=100. offset = 100 - percent?
-  // If we want it to SHRINK (full at 60, empty at 0):
-  // dasharray=100.
-  // offset=0 means full. offset=100 means empty.
-  // So offset = 100 - percent.
   const offset = 100 - percent;
 
   return (
@@ -72,17 +63,17 @@ const TimeUnit = memo(({ value, label, index, max }: { value: number; label: str
             animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
             exit={{ y: "-100%", opacity: 0, filter: "blur(5px)" }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="text-4xl sm:text-5xl md:text-7xl font-sans font-bold text-white leading-none drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] pb-2 block absolute"
+            className="text-6xl sm:text-7xl md:text-7xl font-sans font-bold text-white leading-none drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] pb-2 block absolute"
           >
             {formattedValue}
           </motion.span>
         </AnimatePresence>
         {/* Invisible spacer to maintain height */}
-        <span className="text-4xl sm:text-5xl md:text-7xl font-sans font-bold text-transparent leading-none pb-2 invisible">
+        <span className="text-5xl sm:text-6xl md:text-7xl font-sans font-bold text-transparent leading-none pb-2 invisible">
           88
         </span>
       </div>
-      <span className="text-xs sm:text-sm md:text-lg font-sans font-medium text-white/60 tracking-widest uppercase group-hover:text-orange-400 transition-colors duration-300 relative z-10">
+      <span className="text-sm sm:text-base md:text-lg font-sans font-medium text-white/60 tracking-widest uppercase group-hover:text-orange-400 transition-colors duration-300 relative z-10">
         {label}
       </span>
     </div>
@@ -138,7 +129,7 @@ export const CountdownTimer = ({ targetDate, className }: CountdownTimerProps) =
   if (!isClient) return null; // Prevent hydration mismatch
 
   return (
-    <div className={cn("grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 w-full max-w-lg md:max-w-5xl mx-auto", className)}>
+    <div className={cn("grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 md:gap-8 w-full max-w-lg md:max-w-5xl mx-auto", className)}>
       {timerComponents.map((unit, index) => (
         <TimeUnit key={unit.label} value={unit.value} label={unit.label} index={index} max={unit.max} />
       ))}

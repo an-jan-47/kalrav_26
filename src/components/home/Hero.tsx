@@ -1,9 +1,8 @@
 import { useRef, useLayoutEffect } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CountdownTimer } from '../ui/CountdownTimer';
+import { SocialCards } from './SocialCards';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,26 +48,48 @@ export const Hero = () => {
       {/* Hero Content */}
       <div 
         ref={contentRef} 
-        className="relative z-10 flex flex-col items-center gap-8 px-4"
+        className="relative z-10 flex flex-col items-center gap-8 px-2 md:px-4"
       >
         <CountdownTimer targetDate="2026-02-26T00:00:00+05:30" />
       </div>
 
-      {/* SEO ONLY: Hidden H1 (Kept for structure if needed, but we have a visible one now) */}
-      <h1 className="sr-only">KALRAV '26 - Cultural Fest</h1>
+       {/* Social Cards */}
+       <div className="absolute bottom-4 left-0 right-0 z-20 flex justify-center">
+            <SocialCards cards={[
+                {
+                    id: '1',
+                    platform: 'instagram',
+                    url: 'https://www.instagram.com/reel/DUYCpV2E4BY/?igsh=MWM3cXlkZGI2NWM0cw==',
+                    thumbnail: 'https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/gallery/after_movie0.webp', 
+                    label: 'Aftermovie'
+                },
+                {
+                    id: '2',
+                    platform: 'instagram',
+                    url: 'https://www.instagram.com/reel/DUTDw80k6vH/?igsh=enhyZjRybzFlOTQ4',
+                    thumbnail: 'https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/gallery/date_reveal.webp',
+                    label: 'Date Reveal'
+                },
+                {
+                    id: '3',
+                    platform: 'merch',
+                    url: '/merch',
+                    thumbnail: 'https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/merch/KALRAV_MERCH_SELLING__2__page-0006-removebg-preview.png',
+                    label: 'Grab Yours Now'
+                },
+                {
+                    id: '4',
+                    platform: 'instagram',
+                    url: 'https://www.instagram.com/reel/DUDnptdE6_N/?igsh=M3NkYnYweTRqejdv',
+                    thumbnail: 'https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/gallery/theme.webp', 
+                    label: 'Theme Reveal'
+                },
+                
+            ]} />
+       </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.5, y: [0, 10, 0] }}
-        transition={{ delay: 2, duration: 2, repeat: Infinity }}
-        className="absolute bottom-10 z-20 text-white cursor-pointer"
-        role="button"
-        aria-label="Scroll down to explore"
-        tabIndex={0}
-      >
-        <ChevronDown size={32} />
-      </motion.div>
+   
+      <h1 className="sr-only">KALRAV '26 - Cultural Fest</h1>
     </section>
   );
 };
