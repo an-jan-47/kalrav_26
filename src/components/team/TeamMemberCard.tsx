@@ -66,14 +66,14 @@ const TeamMemberCard = memo(({ member, index }: TeamMemberCardProps) => {
         style={{ transformStyle: 'preserve-3d' }}
       >
         {/* Front Side */}
-        <div className="absolute inset-0 w-full h-full backface-hidden overflow-hidden rounded-xl bg-transparent transition-all duration-300 group-hover:drop-shadow-[0_0_10px_rgba(249,115,22,0.4)]">
+        <div className="absolute inset-0 w-full h-full backface-hidden overflow-hidden rounded-xl bg-white/[0.05] backdrop-blur-md border border-white/10 shadow-xl transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.4)] group-hover:border-orange-500/30">
            
            {/* Image Container */}
            <div className="absolute inset-0 z-0">
               <LazyImage 
                   src={member.image_url} 
                   alt={member.name || member.category} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 bg-transparent"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.02] bg-transparent"
                   decoding="async"
               />
            </div>
