@@ -60,7 +60,7 @@ const Merch = () => {
             <div className="relative h-[100dvh] w-full bg-kalrav-dark flex flex-col pt-6 md:pt-8 overflow-hidden">
                 {/* Background Typography */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0">
-                    <h1 className="text-[15vw] font-kalrav font-black text-white/[0.02] whitespace-nowrap leading-none tracking-tighter transform -translate-y-12">
+                    <h1 className="text-[15vw] font-kalrav font-black text-white/[0.04] whitespace-nowrap leading-none tracking-tighter transform -translate-y-12">
                         KALRAV MERCH
                     </h1>
                 </div>
@@ -71,7 +71,7 @@ const Merch = () => {
                     {/* Upper Section: Hero Product (Takes available flexibility) */}
                     <div className="flex-grow grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-8 items-center min-h-0">
                         {/* Left: Description */}
-                        <div className="hidden lg:flex flex-col items-start justify-center space-y-4 order-1 pl-4 lg:pl-12 mt-12">
+                        <div className="hidden lg:flex flex-col items-start justify-center space-y-4 order-1 pl-4 lg:pl-12">
                             <AnimatePresence mode="wait">
                                 {activeProduct && (
                                     <motion.div
@@ -80,12 +80,12 @@ const Merch = () => {
                                         animate={{ opacity: 1, x: 0 }}
                                         exit={{ opacity: 0, x: -20 }}
                                         transition={{ duration: 0.4 }}
-                                        className="space-y-4 text-left w-full"
+                                        className="space-y-2 text-left w-full"
                                     >
-                                        <h3 className="text-white/40 text-xs font-bold tracking-[0.2em] uppercase font-sans">
+                                        <h3 className="text-white/50 text-xs font-bold tracking-[0.2em] uppercase font-sans">
                                             DESCRIPTION
                                         </h3>
-                                        <p className="text-white/80 text-lg lg:text-xl font-light leading-relaxed max-w-lg font-sans whitespace-pre-line">
+                                        <p className="text-white/80 text-base lg:text-lg font-normal leading-relaxed max-w-md font-sans whitespace-pre-line">
                                             {activeProduct.description}
                                         </p>
                                         <div className="h-1 w-12 bg-white/20 rounded-full mt-2" />
@@ -184,7 +184,7 @@ const Merch = () => {
                         </div>
 
                         {/* Right: Info & Actions */}
-                        <div className="flex flex-col items-center lg:items-end justify-center text-center lg:text-right order-3 space-y-2 lg:space-y-6">
+                        <div className="flex flex-col items-center lg:items-end justify-center text-center lg:text-right order-3 space-y-2 lg:space-y-6 pr-4 lg:pr-12">
                             <AnimatePresence mode="wait">
                                 {activeProduct && (
                                     <motion.div

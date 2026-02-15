@@ -6,7 +6,7 @@ import { PageBackground } from '../components/ui/PageBackground';
 import HomeBg from '../assets/bg/home.webp';
 import { fetchHomeData } from '../services/home';
 
-// Lazy load below-the-fold components
+
 const HorizontalScrollCarousel = lazy(() => import('../components/home/HorizontalScrollCarousel').then(module => ({ default: module.HorizontalScrollCarousel })));
 const FAQ = lazy(() => import('../components/home/FAQ').then(module => ({ default: module.FAQ })));
 const EventsSection = lazy(() => import('../components/home/EventsSection').then(module => ({ default: module.EventsSection })));

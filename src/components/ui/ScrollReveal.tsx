@@ -27,7 +27,7 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
   blurStrength = 4,
   containerClassName = '',
   textClassName = '',
-  rotationEnd = 'bottom center', // Adjusted for better visibility trigger
+  rotationEnd = 'bottom center', 
   wordAnimationEnd = 'bottom center'
 }) => {
   const containerRef = useRef<HTMLHeadingElement>(null);
@@ -52,8 +52,8 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
     const scroller = scrollContainerRef && scrollContainerRef.current ? scrollContainerRef.current : window;
     
     // Check for mobile/reduced motion preference
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
-    const effectiveBlur = isMobile ? (blurStrength / 2) : blurStrength; // Reduce blur load on mobile
+    
+    const effectiveBlur = blurStrength / 2; 
     const useBlur = enableBlur && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     const ctx = gsap.context(() => {
@@ -102,7 +102,8 @@ const ScrollReveal: React.FC<ScrollRevealProps> = ({
                 y: 0,
                 stagger: 0.1, // Stagger relative to scrub progress
                 ease: 'power2.out',
-                duration: 1
+                duration: 1,
+                force3D: true // Force hardware acceleration
             },
             0 // Start concurrent with rotation
         );

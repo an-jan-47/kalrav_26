@@ -87,6 +87,7 @@ export const FilterBar = ({ categories, activeCategory, onSelect }: FilterBarPro
                     >
                         <Check size={14} className="text-kalrav-orange" />
                     </motion.div>
+                  
                   )}
                 </button>
               ))}

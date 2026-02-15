@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import loaderVideo from "../../assets/loader/loader.mp4";
 
 interface LoaderProps {
-  isLoading: boolean; // Signals when to start closing
-  onComplete: () => void; // Signals when fully removed from DOM
+  isLoading: boolean; 
+  onComplete: () => void; 
 }
 
 const Loader = ({ isLoading, onComplete }: LoaderProps) => {
@@ -11,12 +11,12 @@ const Loader = ({ isLoading, onComplete }: LoaderProps) => {
 
   useEffect(() => {
     if (!isLoading) {
-      // Start exit animation
+      
       setIsExiting(true);
-      // Wait for animation to finish before unmounting
+   
       const timer = setTimeout(() => {
         onComplete();
-      }, 500); // Matches duration-500
+      }, 500); 
       return () => clearTimeout(timer);
     }
   }, [isLoading, onComplete]);

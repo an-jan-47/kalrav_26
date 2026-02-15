@@ -3,8 +3,8 @@ import ScrollReveal from '../ui/ScrollReveal';
 export const About = () => {
   return (
     <section className="py-20 bg-transparent relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-kalrav-orange/10 blur-[80px] rounded-full" />
-      <div className="absolute bottom-0 left-0 w-80 h-80 bg-kalrav-accent/5 blur-[100px] rounded-full" />
+      <div className="absolute top-0 right-0 w-64 h-64 bg-kalrav-orange/10 blur-[80px] rounded-full will-change-transform translate-z-0" />
+      <div className="absolute bottom-0 left-0 w-80 h-80 bg-kalrav-accent/5 blur-[100px] rounded-full will-change-transform translate-z-0" />
 
       <div className="container mx-auto px-6 relative z-10 flex flex-col gap-20">
         
@@ -31,7 +31,7 @@ With renowned artists, musicians, and performers gracing the stage, the campus w
               baseRotation={0} 
               baseOpacity={0.1}
               containerClassName="mt-4"
-              textClassName="text-orange-400 text-xl md:text-2xl font-kalrav-body font-medium tracking-wider leading-relaxed text-left drop-shadow-[0_0_15px_rgba(251,146,60,0.4)]"
+              textClassName="text-gray-100 text-xl md:text-2xl font-kalrav-body font-medium tracking-wider leading-relaxed text-left drop-shadow-[0_0_15px_rgba(251,146,60,0.4)]"
               enableBlur={true}
               blurStrength={2}
           >

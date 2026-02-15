@@ -20,7 +20,7 @@ export const LazyImage = ({ src, alt, className, ...props }: LazyImageProps) => 
         observer.disconnect();
       }
     }, {
-      rootMargin: '400px', // Load well before entering viewport for smoother experience
+      rootMargin: '400px', 
       threshold: 0.1
     });
 
@@ -34,10 +34,11 @@ export const LazyImage = ({ src, alt, className, ...props }: LazyImageProps) => 
   return (
     <div 
       ref={containerRef} 
-      className={cn("overflow-hidden bg-gray-900 relative", className)}
+      className={cn("overflow-hidden relative", className)}
     >
       {inView && (
         <motion.img
+          key="img"
           src={src}
           alt={alt}
           initial={{ opacity: 0, scale: 1.1 }}
@@ -47,14 +48,13 @@ export const LazyImage = ({ src, alt, className, ...props }: LazyImageProps) => 
           }}
           transition={{ duration: 0.5 }}
           onLoad={() => setLoaded(true)}
-          onError={() => setLoaded(true)} // Treat error as loaded to remove spinner, but maybe show fallback? 
-          // Better: Add error state.
+          onError={() => setLoaded(true)} 
           className="w-full h-full object-cover"
           {...props}
         />
       )}
       {(!inView || !loaded) && (
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div key="placeholder" className="absolute inset-0 flex items-center justify-center">
             <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
         </div>
       )}

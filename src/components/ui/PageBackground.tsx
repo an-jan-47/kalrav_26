@@ -32,7 +32,15 @@ export const PageBackground = ({
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
       <div className="absolute inset-0 bg-black" /> 
       <motion.div 
-        style={{ y, scale, opacity }}
+        style={{ 
+          y, 
+          scale, 
+          opacity,
+          willChange: "transform, opacity",
+          backfaceVisibility: "hidden", 
+          // Force GPU promotion
+          transform: "translate3d(0,0,0)"
+        }}
         className="relative w-full h-full"
       >
         <img 

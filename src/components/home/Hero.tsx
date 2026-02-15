@@ -30,7 +30,7 @@ export const Hero = () => {
           trigger: containerRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: true,
+          scrub: 1, // Smooth scrub for less jitter
         }
       });
     }, containerRef);
@@ -49,7 +49,7 @@ export const Hero = () => {
       {/* Hero Content */}
       <div 
         ref={contentRef} 
-        className="relative z-10 flex flex-col items-center gap-8 px-2 md:px-4"
+        className="relative z-10 flex flex-col items-center gap-8 px-2 md:px-4 will-change-transform"
       >
         <CountdownTimer targetDate="2026-02-26T00:00:00+05:30" />
       </div>
