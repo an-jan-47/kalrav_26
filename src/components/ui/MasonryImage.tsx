@@ -22,7 +22,7 @@ export const MasonryImage = ({ src, alt, className, aspectRatio, ...props }: Mas
              observer.disconnect();
          }
      }, {
-         rootMargin: '100px', // Fetch slightly before it enters viewport
+         rootMargin: '400px', // Fetch well before it enters viewport
          threshold: 0.1
      });
 

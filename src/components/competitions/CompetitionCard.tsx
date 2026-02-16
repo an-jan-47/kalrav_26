@@ -13,7 +13,7 @@ export const CompetitionCard = ({ competition, index }: CompetitionCardProps) =>
   const { ref, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
-    rootMargin: '50px',
+    rootMargin: '400px',
   });
 
   const handleClick = () => {
