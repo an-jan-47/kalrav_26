@@ -20,22 +20,29 @@ export const GalleryDaySection = ({ title, images }: GalleryDaySectionProps) => 
       </div>
 
       <MasonryGrid>
-        {images.map((img, index) => (
-            <motion.div 
-            key={img.id} 
-            className="break-inside-avoid md:mb-6 group relative aspect-[4/5] md:aspect-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.5) }}
-            >
-            <MasonryImage 
-                src={img.image_link} 
-                alt={`Day ${title} - Image ${img.id}`} 
-                className="w-full h-full md:h-auto transition-all duration-500 ease-out group-hover:scale-[1.02]"
-            />
-            </motion.div>
-        ))}
+        {images.map((img, index) => {
+            // Deterministic aspect ratio pattern to prevent CLS
+            const ratios = ['3/4', '4/3', '1/1', '3/4', '16/9'];
+            const ratio = ratios[index % ratios.length];
+            
+            return (
+                <motion.div 
+                key={img.id} 
+                className="break-inside-avoid mb-4 group relative"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.5) }}
+                >
+                <MasonryImage 
+                    src={img.image_link} 
+                    alt={`Highlight - Image ${img.id}`} 
+                    aspectRatio={ratio}
+                    className="w-full transition-all duration-500 ease-out group-hover:scale-[1.02]"
+                />
+                </motion.div>
+            );
+        })}
       </MasonryGrid>
     </section>
   );

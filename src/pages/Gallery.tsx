@@ -40,7 +40,7 @@ const Gallery = () => {
                 <div className="flex flex-col w-full">
                    <GalleryDaySection 
                         title="Highlights" 
-                        images={images.filter(img => !['1', '2', '3'].includes(img.day))} 
+                        images={images} 
                     />
                     
                     {/* Aftermovie Section */}
@@ -48,11 +48,6 @@ const Gallery = () => {
                         title="AFTERMOVIE"
                         videoId="dQw4w9Q" 
                     />
-
-                    {/* Day Sections */}
-                    <GalleryDaySection title="Day 1" images={images.filter(img => img.day === '1')} />
-                    <GalleryDaySection title="Day 2" images={images.filter(img => img.day === '2')} />
-                    <GalleryDaySection title="Day 3" images={images.filter(img => img.day === '3')} />   
                 </div>
             )}
 
