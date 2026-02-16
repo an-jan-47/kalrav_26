@@ -14,7 +14,7 @@ export const GalleryDaySection = ({ title, images }: GalleryDaySectionProps) => 
   return (
     <section className="w-full max-w-[1600px] mx-auto mb-20 px-4 md:px-12">
       <div className="text-left mb-8">
-        <h2 className="text-2xl md:text-3xl font-kalrav text-white/90 drop-shadow-[0_0_10px_rgba(168,85,247,0.3)] tracking-wider uppercase">
+        <h2 className="text-3xl md:text-5xl font-kalrav text-white/90 drop-shadow-[0_0_10px_rgba(168,85,247,0.3)] tracking-wider uppercase">
           {title}
         </h2>
       </div>

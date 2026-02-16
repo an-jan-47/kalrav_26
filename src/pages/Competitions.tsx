@@ -43,46 +43,84 @@ const Competitions = () => {
     return ['All', ...uniqueCategories].sort();
   }, [competitions]);
 
-  // Filter competitions
-  const filteredCompetitions = useMemo(() => {
-    if (activeCategory === 'All') return competitions;
-    return competitions.filter(c => (c.category || 'Uncategorized') === activeCategory);
+  // Group competitions by category
+  const groupedCompetitions = useMemo(() => {
+     if (activeCategory === 'All') {
+         // Return all categories with their competitions
+         const groups: Record<string, Competition[]> = {};
+         competitions.forEach(comp => {
+             const cat = comp.category || 'Uncategorized';
+             if (!groups[cat]) groups[cat] = [];
+             groups[cat].push(comp);
+         });
+         return groups;
+     } else {
+         // Return only the active category
+         return {
+             [activeCategory]: competitions.filter(c => (c.category || 'Uncategorized') === activeCategory)
+         };
+     }
   }, [competitions, activeCategory]);
 
   return (
     <Layout>
       <PageBackground src={CompetitionBg} parallax={true} opacity={0.6}/>
       
-      <div className="container mx-auto px-6 py-20 min-h-screen">
+      <div className="relative z-10 pt-16 px-4 md:px-12 min-h-screen">
         <motion.div
-           initial={{ opacity: 0, y: -20 }}
-           animate={{ opacity: 1, y: 0 }}
-           className="mb-12"
+           initial={{ opacity: 0 }}
+           animate={{ opacity: 1 }}
+           className="w-full max-w-[1600px] mx-auto mb-4 px-4 md:px-12 flex flex-row justify-between items-center gap-4"
         >
-             <h1 className="text-4xl md:text-5xl lg:text-6xl font-kalrav tracking-widest text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] mb-6 text-center md:text-left">
-                COMPETITIONS
-             </h1>
-             
+             <div className="text-left">
+                <h2 className="text-3xl md:text-5xl font-kalrav text-white/90 drop-shadow-[0_0_10px_rgba(168,85,247,0.3)] tracking-wider uppercase">
+                    COMPETITIONS
+                </h2>
+             </div>
+
+            {!isLoading && competitions.length > 0 && (
+                <div className="flex-shrink-0 relative z-50">
+                    <FilterBar 
+                        categories={categories} 
+                        activeCategory={activeCategory} 
+                        onSelect={setActiveCategory} 
+                    />
+                </div>
+            )}
         </motion.div>
 
-        {!isLoading && competitions.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            <FilterBar 
-                categories={categories} 
-                activeCategory={activeCategory} 
-                onSelect={setActiveCategory} 
-            />
-          </motion.div>
-        )}
+        {isLoading ? (
+             <div className="w-full max-w-[1600px] mx-auto px-4 md:px-12">
+                <CompetitionGrid competitions={[]} isLoading={true} />
+             </div>
+        ) : (
+            <div className="space-y-12 w-full max-w-[1600px] mx-auto px-4 md:px-12">
+                {Object.entries(groupedCompetitions).map(([category, comps]) => (
+                    <motion.div 
+                        key={category}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 0.5 }}
+                        className="relative z-10 text-center"
+                    >
+                        <h2 className="text-2xl md:text-3xl font-kalrav text-white mb-8 border-b border-orange-500/50 pb-2 inline-block drop-shadow-md">
+                            {category}
+                        </h2>
+                        <CompetitionGrid 
+                            competitions={comps} 
+                            isLoading={false} 
+                        />
+                    </motion.div>
+                ))}
 
-        <CompetitionGrid 
-            competitions={filteredCompetitions} 
-            isLoading={isLoading} 
-        />
+                {Object.keys(groupedCompetitions).length === 0 && (
+                     <div className="flex flex-col items-center justify-center py-20 text-white/50">
+                        <p className="text-xl">No competitions found.</p>
+                    </div>
+                )}
+            </div>
+        )}
       </div>
     </Layout>
   );

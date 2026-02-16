@@ -48,7 +48,7 @@ const Team = () => {
    return (
      <Layout>
        <PageBackground src={TeamBg} parallax={true} opacity={0.7} />
-       <div className="min-h-screen pt-24 pb-20 bg-black text-white"> 
+       <div className="min-h-screen pt-20 pb-20 bg-black text-white"> 
            
          <div className="container mx-auto px-4">
              {loading ? (

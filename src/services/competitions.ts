@@ -9,10 +9,12 @@ export interface Competition {
 }
 
 export const fetchCompetitions = async (): Promise<Competition[]> => {
-  return CacheService.get('competitions_data', async () => {
+  // Use a shorter cache time (1 minute) for competitions to allow easier updates
+  return CacheService.get('competitions_v1', async () => {
     const { data, error } = await supabase
       .from('competitions')
-      .select('id,category, poster_path, redirect_url');
+      .select('id,category, poster_path, redirect_url')
+      .order('id', { ascending: true }); // Ensure consistent ordering
 
     if (error) {
       console.error('Error fetching competitions:', error);
@@ -20,5 +22,5 @@ export const fetchCompetitions = async (): Promise<Competition[]> => {
     }
 
     return data || [];
-  });
+  }, 60 * 1000); // 1 minute TTL
 };

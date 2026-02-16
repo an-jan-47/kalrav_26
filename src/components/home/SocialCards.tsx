@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Youtube, Instagram, ShoppingBag, ExternalLink, Play } from 'lucide-react';
 import { LazyImage } from '../ui/LazyImage';
@@ -19,6 +19,7 @@ export interface SocialCardProps {
 interface SocialCardsProps {
   cards: SocialCardProps[];
   className?: string;
+  size?: 'medium' | 'large';
 }
 
 const PlatformIcon = ({ platform }: { platform: SocialPlatform }) => {
@@ -47,9 +48,62 @@ const CardOverlay = ({ platform }: { platform: SocialPlatform }) => {
     return null;
 }
 
-export const SocialCards = ({ cards, className }: SocialCardsProps) => {
+export const SocialCards = ({ cards, className, size = 'medium' }: SocialCardsProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Update active index on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!scrollRef.current) return;
+      
+      const container = scrollRef.current;
+      
+      let closestIndex = 0;
+      let minDistance = Infinity;
+
+      // Find the card closest to the center of the viewport
+      Array.from(container.children).forEach((child, index) => {
+          const div = child as HTMLElement;
+          const childCenter = div.offsetLeft + div.offsetWidth / 2;
+          // Adjust for container scroll position logic if needed, but offsetLeft is relative to offsetParent (which is scrollRef)
+          // Wait, offsetLeft is relative to the scroll container's content, so checking against scrollLeft + clientWidth/2 is correct.
+          // However, child.offsetLeft is static. We need to compare it to scrollLeft + half viewport.
+          
+          const distance = Math.abs(childCenter - (container.scrollLeft + container.clientWidth / 2));
+           if (distance < minDistance) {
+               minDistance = distance;
+               closestIndex = index;
+           }
+      });
+      
+      if (activeIndex !== closestIndex) {
+          setActiveIndex(closestIndex);
+      }
+    };
+
+    const container = scrollRef.current;
+    if (container) {
+        container.addEventListener('scroll', handleScroll, { passive: true });
+        // Initial check
+        handleScroll();
+    }
+    
+    return () => container?.removeEventListener('scroll', handleScroll);
+  }, [activeIndex]); // Re-attach if needed, or just [] if stable. But activeIndex dependency isn't needed for the logic itself except for optimization? Actually handleScroll closes over nothing for calculation except container.
+
+  const scrollToCard = (index: number) => {
+    if (!scrollRef.current) return;
+    const container = scrollRef.current;
+    const child = container.children[index] as HTMLElement;
+    
+    if (child) {
+        // Center the card
+        const scrollLeft = child.offsetLeft - (container.clientWidth / 2) + (child.offsetWidth / 2);
+        container.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+    }
+  };
 
   const handleCardClick = (card: SocialCardProps) => {
     if (card.platform === 'merch') {
@@ -57,6 +111,16 @@ export const SocialCards = ({ cards, className }: SocialCardsProps) => {
     } else {
       window.open(card.url, '_blank', 'noopener,noreferrer');
     }
+  };
+
+  const dimensions = {
+      medium: "w-52 h-[130px] md:w-56 md:h-[140px]",
+      large: "w-[312px] h-[195px] md:w-[336px] md:h-[210px]"
+  };
+
+  const imageSize = {
+      medium: { width: 224, height: 140 },
+      large: { width: 336, height: 210 }
   };
 
   return (
@@ -85,21 +149,16 @@ export const SocialCards = ({ cards, className }: SocialCardsProps) => {
             }}
           >
             {/* Glass Card Container */}
-            <div className="
-              relative overflow-hidden rounded-2xl 
-              w-52 h-[130px] md:w-56 md:h-[140px]
-              border border-white/10 bg-white/5 backdrop-blur-md 
-              shadow-lg transition-all duration-300
-              group-hover:border-orange-500/50 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.2)]
-              group-hover:-translate-y-1
-              grayscale-[20%] group-hover:grayscale-0
-            ">
+            <div className={cn(
+              "relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md shadow-lg transition-all duration-300 group-hover:border-orange-500/50 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.2)] group-hover:-translate-y-1 grayscale-[20%] group-hover:grayscale-0",
+              dimensions[size]
+            )}>
                 {/* Background Image */}
                <LazyImage 
                     src={card.thumbnail} 
                     alt={card.label || card.platform} 
-                    width={224} 
-                    height={140}
+                    width={imageSize[size].width} 
+                    height={imageSize[size].height}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                />
 
@@ -139,6 +198,24 @@ export const SocialCards = ({ cards, className }: SocialCardsProps) => {
           </motion.div>
         ))}
       </div>
+
+       {/* Dot Indicators */}
+      <div className="w-full flex gap-2 justify-center mt-4 md:hidden">
+            {cards.map((_, index) => (
+                <button
+                    key={index}
+                    onClick={() => scrollToCard(index)}
+                    className={cn(
+                        "h-1.5 rounded-full transition-all duration-300",
+                        activeIndex === index 
+                            ? "bg-orange-500 w-6" 
+                            : "bg-white/20 w-1.5 hover:bg-white/40"
+                    )}
+                    aria-label={`Go to slide ${index + 1}`}
+                />
+            ))}
+      </div>
     </div>
   );
 };
+

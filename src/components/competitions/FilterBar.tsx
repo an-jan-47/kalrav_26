@@ -35,7 +35,7 @@ export const FilterBar = ({ categories, activeCategory, onSelect }: FilterBarPro
   };
 
   return (
-    <div className="relative mb-8 z-40 inline-block" ref={dropdownRef}>
+    <div className="relative z-40 inline-block" ref={dropdownRef}>
       {/* Trigger Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -47,7 +47,7 @@ export const FilterBar = ({ categories, activeCategory, onSelect }: FilterBarPro
         )}
       >
         <Filter size={18} className={cn("transition-colors", isOpen ? "text-kalrav-orange" : "text-white/60 group-hover:text-white")} />
-        <span className="font-kalrav tracking-wider text-sm uppercase">
+        <span className="font-kalrav tracking-wider text-sm uppercase hidden md:inline">
           {activeCategory === 'All' ? 'Filter By' : activeCategory}
         </span>
         <ChevronDown 
@@ -64,7 +64,7 @@ export const FilterBar = ({ categories, activeCategory, onSelect }: FilterBarPro
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute left-0 mt-3 w-64 p-2 rounded-2xl bg-black/80 border border-white/10 backdrop-blur-xl shadow-2xl overflow-hidden"
+            className="absolute right-0 mt-3 w-64 p-2 rounded-2xl bg-black/80 border border-white/10 backdrop-blur-xl shadow-2xl overflow-hidden"
           >
             <div className="max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent p-1">
               {categories.map((category) => (
