@@ -97,7 +97,12 @@ const Gallery = () => {
                             //     thumbnail: getOptimizedImageUrl('https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/gallery/theme.webp'), 
                             //     label: 'Team Heads 2026'
                             // },
-                        ]} className="!py-0 !px-0 !max-w-none items-start" size="large" />
+                        ]} 
+                        className="!py-0 !px-0 !max-w-none items-start" 
+                        size="large" 
+                        autoScroll={true}
+                        interval={4000}
+                    />
                     </div>
 
                    <GalleryDaySection 

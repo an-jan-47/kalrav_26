@@ -10,12 +10,12 @@ interface SEOProps {
 
 const SEO = ({ 
   title = "Kalrav'26", 
-  description = "Kalrav'26: The Annual Cultural Fest of Deen Dayal Upadhyaya College (DDUC). Experience the Tamaḥkṣayaḥ - The End of Darkness. Join us for music, dance, and creativity.",
-  keywords = "Kalrav,kalrav dduc,kalrav website, ddu kalrav, dduc kalav, kalrav ddu,Kalrav '26, Kalrav 26, DDUC Fest, Deen Dayal Upadhyaya College, Delhi University Fest, Cultural Fest, Tamaḥkṣayaḥ, College Fest Delhi",
+  description = "Kalrav'26: The Annual Cultural Fest of Deen Dayal Upadhyaya College (DDUC). Experience the Tamahkshaya - The End of Darkness. Join us for music, dance, and creativity.",
+  keywords = "Kalrav,kalrav dduc,kalrav website, ddu kalrav, dduc kalav, kalrav ddu,Kalrav '26, Kalrav 26, DDUC Fest, Deen Dayal Upadhyaya College, Delhi University Fest, Cultural Fest, Tamahkshaya, College Fest Delhi",
   image = "https://kalravdduc.in/og-image.jpg", // Absolute URL is better for OG
   url = "https://kalravdduc.in"
 }: SEOProps) => {
-    const siteTitle = title === "Kalrav'26" ? "Kalrav'26 - Tamaḥkṣayaḥ" : `${title} | Kalrav'26`;
+    const siteTitle = title === "Kalrav'26" ? "Kalrav'26 - Tamahkshaya" : `${title} | Kalrav'26`;
     const fullUrl = url.startsWith('http') ? url : `https://kalravdduc.in${url}`;
 
   return (

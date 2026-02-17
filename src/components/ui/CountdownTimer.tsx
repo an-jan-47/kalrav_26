@@ -63,7 +63,7 @@ const TimeUnit = memo(({ value, label, index, max }: { value: number; label: str
             animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
             exit={{ y: "-100%", opacity: 0, filter: "blur(5px)" }}
             transition={{ duration: 0.6, ease: "easeInOut" }}
-            className="text-6xl sm:text-7xl md:text-7xl font-sans font-bold text-white leading-none drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] pb-2 block absolute"
+            className="text-4xl sm:text-6xl md:text-7xl font-sans font-bold text-white leading-none drop-shadow-[0_0_10px_rgba(255,255,255,0.3)] pb-2 block absolute"
           >
             {formattedValue}
           </motion.span>

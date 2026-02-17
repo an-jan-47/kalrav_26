@@ -21,8 +21,8 @@ const questions = [
     answer: "Yes! Kalrav '26 is an free and open-for-all fest. Students from other colleges can participate in competitions and attend events, provided they carry their college ID cards."
   },
   {
-    question: "What is the theme Theme about?",
-    answer: "तमःक्षयः (Tamaḥkṣayaḥ) End of Darkness represents the breaking point where silence ends and expression begins. It symbolizes the destruction of ignorance, fear, and limitation, making way for creativity, courage, and identity. Kalrav ’26 embraces this moment of transformation where chaos is confronted, voices rise from the shadows, and culture emerges stronger, louder, and unapologetically alive."
+    question: "What is the Theme about?",
+    answer: "तमःक्षयः (Tamahkshaya) End of Darkness represents the breaking point where silence ends and expression begins. It symbolizes the destruction of ignorance, fear, and limitation, making way for creativity, courage, and identity. Kalrav ’26 embraces this moment of transformation where chaos is confronted, voices rise from the shadows, and culture emerges stronger, louder, and unapologetically alive."
   },
   {
     question:"Rules And Regulations",

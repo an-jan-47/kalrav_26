@@ -4,7 +4,7 @@ const StructuredData = () => {
   const eventSchema = {
     "@context": "https://schema.org",
     "@type": "Event",
-    "name": "Kalrav'26 - Tamaḥkṣayaḥ",
+    "name": "Kalrav'26 - Tamahkshaya",
     "startDate": "2026-03-20T10:00:00+05:30", // Placeholder date, user should update
     "endDate": "2026-03-22T22:00:00+05:30",   // Placeholder date
     "eventStatus": "https://schema.org/EventScheduled",
@@ -23,7 +23,7 @@ const StructuredData = () => {
     "image": [
       "https://kalravdduc.in/og-image.jpg"
     ],
-    "description": "Kalrav '26 is the annual cultural festival of Deen Dayal Upadhyaya College, University of Delhi. Theme: Tamaḥkṣayaḥ - The End of Darkness.",
+    "description": "Kalrav '26 is the annual cultural festival of Deen Dayal Upadhyaya College, University of Delhi. Theme: Tamahkshaya - The End of Darkness.",
     "organizer": {
       "@type": "Organization",
       "name": "Kalrav DDUC Team",

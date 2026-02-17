@@ -52,7 +52,7 @@ With renowned artists, musicians, and performers gracing the stage, the campus w
               containerClassName="mb-8"
               textClassName="text-gray-100 text-lg md:text-xl font-kalrav-body font-normal leading-loose tracking-wide text-right drop-shadow-sm whitespace-pre-line"
           >
-            {`तमःक्षयः (Tamaḥkṣayaḥ)  End of Darkness represents the breaking point where silence ends and expression begins. It symbolizes the destruction of ignorance, fear, and limitation, making way for creativity, courage, and identity.
+            {`तमःक्षयः (Tamahkshaya)  End of Darkness represents the breaking point where silence ends and expression begins. It symbolizes the destruction of ignorance, fear, and limitation, making way for creativity, courage, and identity.
 
 Kalrav ’26 embraces this moment of transformation where chaos is confronted, voices rise from the shadows, and culture emerges stronger, louder, and unapologetically alive.`}
           </ScrollReveal>      

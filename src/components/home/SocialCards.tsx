@@ -35,10 +35,10 @@ const PlatformIcon = ({ platform }: { platform: SocialPlatform }) => {
   }
 };
 
-const CardOverlay = ({ platform }: { platform: SocialPlatform }) => {
+const CardOverlay = ({ platform, className }: { platform: SocialPlatform, className?: string }) => {
     if (platform === 'youtube') {
         return (
-            <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors">
+            <div className={cn("absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/10 transition-colors", className)}>
                 <div className="bg-red-600/90 rounded-full p-3 backdrop-blur-sm shadow-xl group-hover:scale-110 transition-transform duration-300">
                     <Play fill="white" className="text-white ml-1" size={20} />
                 </div>
@@ -48,10 +48,24 @@ const CardOverlay = ({ platform }: { platform: SocialPlatform }) => {
     return null;
 }
 
-export const SocialCards = ({ cards, className, size = 'medium' }: SocialCardsProps) => {
+export const SocialCards = ({ cards, className, size = 'medium', autoScroll = false, interval = 3000 }: SocialCardsProps & { autoScroll?: boolean; interval?: number }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Auto-scroll logic
+  useEffect(() => {
+    if (!autoScroll || isPaused) return;
+
+    const timer = setInterval(() => {
+      const nextIndex = (activeIndex + 1) % cards.length;
+      scrollToCard(nextIndex);
+      setActiveIndex(nextIndex);
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [autoScroll, interval, isPaused, activeIndex, cards.length]);
 
   // Update active index on scroll
   useEffect(() => {
@@ -66,18 +80,18 @@ export const SocialCards = ({ cards, className, size = 'medium' }: SocialCardsPr
       // Find the card closest to the center of the viewport
       Array.from(container.children).forEach((child, index) => {
           const div = child as HTMLElement;
+          // Calculate center relative to the container's scroll view
           const childCenter = div.offsetLeft + div.offsetWidth / 2;
-          // Adjust for container scroll position logic if needed, but offsetLeft is relative to offsetParent (which is scrollRef)
-          // Wait, offsetLeft is relative to the scroll container's content, so checking against scrollLeft + clientWidth/2 is correct.
-          // However, child.offsetLeft is static. We need to compare it to scrollLeft + half viewport.
+          const containerCenter = container.scrollLeft + container.clientWidth / 2;
           
-          const distance = Math.abs(childCenter - (container.scrollLeft + container.clientWidth / 2));
+          const distance = Math.abs(childCenter - containerCenter);
            if (distance < minDistance) {
                minDistance = distance;
                closestIndex = index;
            }
       });
       
+      // Only update if significantly different to avoid fighting with auto-scroll
       if (activeIndex !== closestIndex) {
           setActiveIndex(closestIndex);
       }
@@ -91,7 +105,7 @@ export const SocialCards = ({ cards, className, size = 'medium' }: SocialCardsPr
     }
     
     return () => container?.removeEventListener('scroll', handleScroll);
-  }, [activeIndex]); // Re-attach if needed, or just [] if stable. But activeIndex dependency isn't needed for the logic itself except for optimization? Actually handleScroll closes over nothing for calculation except container.
+  }, [activeIndex]); 
 
   const scrollToCard = (index: number) => {
     if (!scrollRef.current) return;
@@ -124,7 +138,13 @@ export const SocialCards = ({ cards, className, size = 'medium' }: SocialCardsPr
   };
 
   return (
-    <div className={cn("w-full max-w-[90rem] px-4 py-2 flex flex-col items-center", className)}>
+    <div 
+      className={cn("w-full max-w-[90rem] px-4 py-2 flex flex-col items-center", className)}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={() => setIsPaused(true)}
+      onTouchEnd={() => setIsPaused(false)}
+    >
 
       <div 
         ref={scrollRef}
@@ -151,6 +171,7 @@ export const SocialCards = ({ cards, className, size = 'medium' }: SocialCardsPr
             {/* Glass Card Container */}
             <div className={cn(
               "relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md shadow-lg transition-all duration-300 group-hover:border-orange-500/50 group-hover:shadow-[0_0_20px_rgba(249,115,22,0.2)] group-hover:-translate-y-1 grayscale-[20%] group-hover:grayscale-0",
+              activeIndex === index && "border-orange-500/50 shadow-[0_0_20px_rgba(249,115,22,0.2)] -translate-y-1 grayscale-0",
               dimensions[size]
             )}>
                 {/* Background Image */}
@@ -159,14 +180,22 @@ export const SocialCards = ({ cards, className, size = 'medium' }: SocialCardsPr
                     alt={card.label || card.platform} 
                     width={imageSize[size].width} 
                     height={imageSize[size].height}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className={cn(
+                        "absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110",
+                        activeIndex === index && "scale-110"
+                    )}
                />
 
                {/* Gradient Overlay */}
                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
                {/* Center Action Overlay (Play Button etc) */}
-               <CardOverlay platform={card.platform} />
+               <div className={cn(
+                   "transition-transform duration-300",
+                    activeIndex === index && "scale-110" // Optional: scale the overlay too if needed, or just rely on CardOverlay logic
+               )}>
+                   <CardOverlay platform={card.platform} className={activeIndex === index ? "opacity-100" : ""} />
+               </div>
 
                {/* Content */}
                <div className="absolute bottom-0 left-0 right-0 p-3 flex items-center justify-between">
@@ -179,21 +208,30 @@ export const SocialCards = ({ cards, className, size = 'medium' }: SocialCardsPr
                         )}
                     </div>
                    
-                    <div className="text-white/80 group-hover:text-white transition-colors">
+                    <div className={cn("text-white/80 transition-colors", (activeIndex === index ||  "group-hover:text-white") && "text-white")}>
                          <PlatformIcon platform={card.platform} />
                     </div>
                </div>
 
                 {/* Hover Redirect Overlay */}
-               <div className="absolute top-2 right-2 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                    <div className="bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full flex items-center gap-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+               <div className={cn(
+                   "absolute top-2 right-2 flex items-center justify-center transition-opacity duration-300 pointer-events-none",
+                   activeIndex === index ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+               )}>
+                    <div className={cn(
+                        "bg-black/40 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full flex items-center gap-2 transition-transform duration-300",
+                        activeIndex === index ? "translate-y-0" : "transform translate-y-2 group-hover:translate-y-0"
+                    )}>
                         <span className="text-white text-xs font-medium">Visit</span>
                         <ExternalLink size={12} className="text-white" />
                     </div>
                </div>
 
                 {/* Hover Glow Effect */}
-               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-tr from-orange-500/10 to-transparent" />
+               <div className={cn(
+                   "absolute inset-0 transition-opacity duration-500 pointer-events-none bg-gradient-to-tr from-orange-500/10 to-transparent",
+                   activeIndex === index ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                )} />
             </div>
           </motion.div>
         ))}
