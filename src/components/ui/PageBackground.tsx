@@ -35,7 +35,8 @@ export const PageBackground = ({
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
       <div className="absolute inset-0 bg-black" /> 
       <motion.div 
-         // ...
+        style={{ opacity, y, scale }}
+        className="w-full h-full"
       >
         <img 
           src={proxiedSrc} 
