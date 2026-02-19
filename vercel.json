@@ -1,8 +1,27 @@
 {
   "rewrites": [
     {
+      "source": "/cdn/image/:path*",
+      "destination": "https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/:path*"
+    },
+    {
       "source": "/:path*",
       "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/cdn/image/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        },
+        {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+        }
+      ]
     }
   ]
 }

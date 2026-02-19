@@ -15,5 +15,14 @@ export default defineConfig({
     },
     chunkSizeWarningLimit: 1000,
   },
+  server: {
+    proxy: {
+      '/cdn/image': {
+        target: 'https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/cdn\/image/, ''),
+      },
+    },
+  },
   plugins: [react()],
 })

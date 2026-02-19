@@ -18,7 +18,11 @@ export const CompetitionCard = ({ competition, index }: CompetitionCardProps) =>
 
   const handleClick = () => {
     if (competition.redirect_url) {
-      window.open(competition.redirect_url);
+      let url = competition.redirect_url;
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = `https://${url}`;
+      }
+      window.open(url, '_blank', 'noopener,noreferrer');
     }
   };
 

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, type HTMLMotionProps } from 'framer-motion';
 import { cn } from '../../utils/cn';
+import { getProxiedUrl } from '../../utils/image';
 
 interface MasonryImageProps extends HTMLMotionProps<"img"> {
   src: string;
@@ -14,6 +15,8 @@ export const MasonryImage = ({ src, alt, className, aspectRatio, ...props }: Mas
   const [loaded, setLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  const proxiedSrc = getProxiedUrl(src);
 
   useEffect(() => {
      const observer = new IntersectionObserver(([entry]) => {
@@ -45,7 +48,7 @@ export const MasonryImage = ({ src, alt, className, aspectRatio, ...props }: Mas
     >
       {inView && !hasError && (
         <motion.img
-            src={src}
+            src={proxiedSrc}
             alt={alt}
             decoding="async"
             initial={{ opacity: 0, scale: 1.05 }}

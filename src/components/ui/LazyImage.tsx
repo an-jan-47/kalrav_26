@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, type HTMLMotionProps } from 'framer-motion';
 import { cn } from '../../utils/cn';
+import { getProxiedUrl } from '../../utils/image';
 
 interface LazyImageProps extends HTMLMotionProps<"img"> {
   src: string;
@@ -12,6 +13,9 @@ export const LazyImage = ({ src, alt, className, ...props }: LazyImageProps) => 
   const [inView, setInView] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Ensure we use the proxied URL for caching
+  const proxiedSrc = getProxiedUrl(src);
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -39,7 +43,7 @@ export const LazyImage = ({ src, alt, className, ...props }: LazyImageProps) => 
       {inView && (
         <motion.img
           key="img"
-          src={src}
+          src={proxiedSrc}
           alt={alt}
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ 

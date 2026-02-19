@@ -7,6 +7,8 @@ import { Layout } from '../components/Layout';
 import { Loader2, ArrowRight } from 'lucide-react';
 
 
+import { getProxiedUrl } from '../utils/image';
+
 const Merch = () => {
     // ... state logic remains same
     const [products, setProducts] = useState<MerchProduct[]>([]);
@@ -20,7 +22,7 @@ const Merch = () => {
         if (activeProduct?.images) {
             activeProduct.images.forEach((src) => {
                 const img = new Image();
-                img.src = src;
+                img.src = getProxiedUrl(src);
             });
         }
     }, [activeProduct]);
@@ -113,7 +115,7 @@ const Merch = () => {
                                             <AnimatePresence mode="popLayout" custom={currentImageIndex}>
                                                 <motion.img
                                                     key={`${activeProduct.id}-${currentImageIndex}`}
-                                                    src={activeProduct.images[currentImageIndex]}
+                                                    src={getProxiedUrl(activeProduct.images[currentImageIndex])}
                                                     alt={activeProduct.name}
                                                     initial={{ opacity: 0, x: 20 }}
                                                     animate={{ opacity: 1, x: 0 }}

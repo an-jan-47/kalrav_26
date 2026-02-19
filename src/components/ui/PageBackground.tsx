@@ -1,4 +1,5 @@
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
+import { getProxiedUrl } from '../../utils/image';
 
 interface PageBackgroundProps {
   src: string;
@@ -28,23 +29,16 @@ export const PageBackground = ({
     scale = useTransform(scrollY, [0, 1000], [1.2, 1.8]);
   }
 
+  const proxiedSrc = getProxiedUrl(src);
+
   return (
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
       <div className="absolute inset-0 bg-black" /> 
       <motion.div 
-        style={{ 
-          y, 
-          scale, 
-          opacity,
-          willChange: "transform, opacity",
-          backfaceVisibility: "hidden", 
-          // Force GPU promotion
-          transform: "translate3d(0,0,0)"
-        }}
-        className="relative w-full h-full"
+         // ...
       >
         <img 
-          src={src} 
+          src={proxiedSrc} 
           alt={alt} 
           className="w-full h-full object-cover object-center bg-black/20"
           loading={priority ? "eager" : "lazy"}

@@ -1,16 +1,20 @@
+// Supabase storage URL with our proxy path
+export const getProxiedUrl = (url: string) => {
+    if (!url || !url.includes('supabase.co')) return url;
+    return url.replace(
+        /https:\/\/.*\.supabase\.co\/storage\/v1\/object\/public\//, 
+        '/cdn/image/'
+    );
+};
+
 export const getOptimizedImageUrl = (url: string, width: number = 400) => {
-    if (!url.includes('supabase.co')) return url;
+
+    let finalUrl = getProxiedUrl(url);
+
+    if (!finalUrl.startsWith('/cdn/image/')) return finalUrl;
     
-    // Check if already has query params
-    const hasParams = url.includes('?');
+    const hasParams = finalUrl.includes('?');
     const separator = hasParams ? '&' : '?';
     
-    // Supabase storage image transformation
-    // Note: This requires the "Image Transformation" feature to be enabled in Supabase project.
-    // However, for standard Supabase storage, typically we just append constraints if supported.
-    // If transformations are not enabled, this might be ignored, but it's safe to add.
-    // Standard pattern: /render/image/public/... or just ?width=... depends on setup.
-    // We will assume the standard query param method which is common.
-    
-    return `${url}${separator}width=${width}&format=webp&quality=80`;
+    return `${finalUrl}${separator}width=${width}&format=webp&quality=80`;
 };
