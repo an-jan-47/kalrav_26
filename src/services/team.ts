@@ -31,7 +31,7 @@ const normalizePosition = (position?: string): HierarchyPosition => {
     const pos = position.toLowerCase().trim();
     
     if (pos === 'cultural secretary') return 'cultural_secretary';
-    if (pos === 'creative director') return 'creative_director';
+    if (pos === 'creative director' || pos === 'sponsership mentor' || pos === 'sponsorship mentor') return 'creative_director';
     if (pos === 'oc team lead' || pos === 'oc team head') return 'oc_team_head';
     if (pos.includes('committee')) return 'oc_committee';
     
