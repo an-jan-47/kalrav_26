@@ -59,27 +59,34 @@ export const Hero = () => {
             <SocialCards cards={[
                 {
                     id: '1',
+                    platform: 'ticket',
+                    url: 'https://www.premiertickets.co/event/dduc-kalrav-2026/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQMMjU2MjgxMDQwNTU4AAGncGnNVCoMR0QNngZ9LlNTVegDjO7IcJogeaBMJPcJuXhfgDavo8lfZHSrumg_aem_Qy61Lav9WXEYhvNzpbtauw',
+                    thumbnail: 'https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/gallery/202602093667341.webp',
+                    label: 'Get Tickets'
+                },
+                {
+                    id: '2',
                     platform: 'instagram',
                     url: 'https://www.instagram.com/reel/DUYCpV2E4BY/?igsh=MWM3cXlkZGI2NWM0cw==',
                     thumbnail: getOptimizedImageUrl('https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/gallery/after_movie0.webp'), 
                     label: 'Aftermovie'
                 },
                 {
-                    id: '2',
+                    id: '3',
                     platform: 'instagram',
                     url: 'https://www.instagram.com/reel/DUTDw80k6vH/?igsh=enhyZjRybzFlOTQ4',
                     thumbnail: getOptimizedImageUrl('https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/gallery/date_reveal.webp'),
                     label: 'Date Reveal'
                 },
                 {
-                    id: '3',
+                    id: '4',
                     platform: 'merch',
                     url: '/merch',
                     thumbnail: getOptimizedImageUrl('https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/merch/KALRAV_MERCH_SELLING__2__page-0006-removebg-preview.png'),
                     label: 'BUY MERCH'
                 },
                 {
-                    id: '4',
+                    id: '5',
                     platform: 'instagram',
                     url: 'https://www.instagram.com/reel/DUDnptdE6_N/?igsh=M3NkYnYweTRqejdv',
                     thumbnail: getOptimizedImageUrl('https://atgpzwtczetsesrbfmat.supabase.co/storage/v1/object/public/gallery/theme.webp'), 
