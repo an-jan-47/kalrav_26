@@ -1,11 +1,11 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Youtube, Instagram, ShoppingBag, ExternalLink, Play } from 'lucide-react';
+import { Youtube, Instagram, ShoppingBag, ExternalLink, Play, Ticket } from 'lucide-react';
 import { LazyImage } from '../ui/LazyImage';
 import { cn } from '../../utils/cn';
 import { useNavigate } from 'react-router-dom';
 
-export type SocialPlatform = 'youtube' | 'instagram' | 'merch';
+export type SocialPlatform = 'youtube' | 'instagram' | 'merch' | 'ticket';
 
 export interface SocialCardProps {
   id: string;
@@ -30,6 +30,8 @@ const PlatformIcon = ({ platform }: { platform: SocialPlatform }) => {
       return <Instagram className="text-white-500" size={20} />;
     case 'merch':
       return <ShoppingBag className="text-white-500" size={20} />;
+    case 'ticket':
+      return <Ticket className="text-white-500" size={20} />;
     default:
       return <ExternalLink size={20} />;
   }
