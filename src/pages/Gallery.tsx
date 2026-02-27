@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Layout } from '../components/Layout';
 import { PageBackground } from '../components/ui/PageBackground';
-import { VideoSection } from '../components/ui/VideoSection';
 import { GalleryDaySection } from '../components/gallery/GalleryDaySection';
 import { GallerySkeleton } from '../components/gallery/GallerySkeleton';
 import { fetchGalleryImages, type GalleryImage } from '../services/gallery';
@@ -110,11 +109,6 @@ const Gallery = () => {
                         images={images} 
                     />
                     
-                    {/* Aftermovie Section */}
-                    <VideoSection 
-                        title="AFTERMOVIE"
-                        videoId="dQw4w9Q" 
-                    />
                 </div>
             )}
 
