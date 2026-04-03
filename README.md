@@ -223,8 +223,3 @@ You can run it with Artillery if needed:
   <li><strong>Build failures:</strong> Run lint, check TypeScript errors, and confirm package compatibility.</li>
 </ul>
 
-
-
-<p align="center">
-  Built for Kalrav '26, DDUC.
-</p>
